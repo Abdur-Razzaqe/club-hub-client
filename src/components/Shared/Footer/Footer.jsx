@@ -1,6 +1,6 @@
-import React from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import Logo from "../../Logo/Logo";
 
 const Footer = () => {
   return (
@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-8">
         <div>
           {/* about section */}
-          <h2>logo</h2>
+          <Logo></Logo>
           <p>
             ClubHub is your gateway to discovering local clubs, joining
             communities, and exploring exciting events-anytime, anywhere.
