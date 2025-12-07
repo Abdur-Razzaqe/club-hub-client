@@ -1,10 +1,8 @@
 import { motion } from "framer-motion";
-import React from "react";
 import {
   FaCalendarCheck,
   FaPlusCircle,
   FaSearch,
-  FaUser,
   FaUsers,
 } from "react-icons/fa";
 
@@ -33,7 +31,7 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-gradient-to-r from-teal-50 to-blue-50">
       <div className="max-w-7xl mx-auto px-6 text-center">
         <h2 className="text-4xl font-bold text-gray-800 mb-12">
           How ClubHub Works
