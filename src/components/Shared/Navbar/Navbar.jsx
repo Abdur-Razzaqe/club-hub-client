@@ -1,8 +1,17 @@
 import { Link, NavLink } from "react-router";
 import Logo from "../../Logo/Logo";
+import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
-  const user = null;
+  const { user, logOut } = useAuth();
+  const handleLogOut = () => {
+    logOut()
+      .then()
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const links = (
     <>
       <li>
@@ -75,7 +84,7 @@ const Navbar = () => {
               alt="avatar"
               className="w-10 h-10 rounded-full cursor-pointer"
             />
-            <div className="absolute right-0 mt-2 hidden group-hover:block bg-white shadow rounded w-40">
+            <div className="absolute right-0 mt-2  shadow rounded w-40">
               <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100">
                 Profile
               </Link>
@@ -86,8 +95,8 @@ const Navbar = () => {
                 Dashboard
               </Link>
               <button
-                type="button"
-                class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5"
+                onClick={handleLogOut}
+                className="block px-4 py-2 hover:bg-gray-100"
               >
                 Logout
               </button>
