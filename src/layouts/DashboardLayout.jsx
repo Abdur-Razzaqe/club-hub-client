@@ -41,6 +41,9 @@ const DashboardLayout = () => {
               <li>
                 <NavLink to="dashboard/events">Manage Events</NavLink>
               </li>
+              <li>
+                <NavLink to="dashboard/create-event">Create Event</NavLink>
+              </li>
             </>
           )}
           {/* member */}

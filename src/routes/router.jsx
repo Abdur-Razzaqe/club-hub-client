@@ -10,6 +10,10 @@ import DashboardHome from "../pages/Dashboard/DashboardHome";
 import CreateClub from "../pages/Dashboard/Manager/CreateClub";
 import FeaturedClubs from "../pages/Home/FeaturedClubs/FeaturedClubs";
 import Clubs from "../pages/Clubs/Clubs";
+import ClubDetails from "../pages/ClubDetails/ClubDetails";
+import CreateEvent from "../pages/Dashboard/Manager/CreateEvent";
+import Events from "../pages/Events/Events";
+import EventDetails from "../pages/Events/EventDetails";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +31,18 @@ export const router = createBrowserRouter([
       {
         path: "featured-clubs",
         element: <FeaturedClubs />,
+      },
+      {
+        path: "clubs/:id",
+        element: <ClubDetails />,
+      },
+      {
+        path: "events",
+        element: <Events />,
+      },
+      {
+        path: "events/:id",
+        element: <EventDetails />,
       },
     ],
   },
@@ -60,6 +76,10 @@ export const router = createBrowserRouter([
       {
         path: "create-club",
         element: <CreateClub />,
+      },
+      {
+        path: "create-event",
+        element: <CreateEvent />,
       },
     ],
   },

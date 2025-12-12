@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Link } from "react-router";
 
 const FeaturedClubs = () => {
   const axiosSecure = useAxiosSecure();
@@ -44,9 +45,12 @@ const FeaturedClubs = () => {
                 Fee: ${club.membershipFee}
               </p>
             </div>
-            <button className="btn btn-sm mt-4 w-full  text-white bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500">
+            <Link
+              to={`/clubs/${club._id}`}
+              className="btn btn-sm mt-4 w-full  text-white bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500"
+            >
               View Details
-            </button>
+            </Link>
           </div>
         ))}
       </div>

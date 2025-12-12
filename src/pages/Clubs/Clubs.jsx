@@ -1,14 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-
 import Card from "../../components/Card";
-
-import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Clubs = () => {
+  const axiosSecure = useAxiosSecure();
   const { data: clubs = [], isLoading } = useQuery({
     queryKey: ["clubs"],
     queryFn: async () => {
-      const result = await axios.get("http://localhost:3000/clubs");
+      const result = await axiosSecure.get("/clubs");
       return result.data;
     },
   });
