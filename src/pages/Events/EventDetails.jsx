@@ -7,7 +7,6 @@ import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 
 const EventDetails = () => {
   const { id } = useParams();
-  console.log("Current Event Id:", id);
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
   //   const [isRegistered, setIsRegistered] = useState(false);
@@ -29,14 +28,19 @@ const EventDetails = () => {
         text: "You must be logged in to register!",
       });
     }
-    await axiosSecure.post("event-registrations", {
+    console.log("event id:", id);
+    console.log("event:", event);
+    await axiosSecure.post("/event-registrations", {
       eventId: id,
       userEmail: user.email,
+      clubId: event.clubId,
+
+      //   paymentId: event.isPaid ? paymentIntentId : null,
     });
     Swal.fire({
       icon: "success",
       title: "Registration",
-      text: "Successfully Registered",
+      text: " Registered successfully",
     });
   };
   if (isLoading) return <p>Loading...</p>;

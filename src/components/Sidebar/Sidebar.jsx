@@ -3,8 +3,9 @@ import { NavLink } from "react-router";
 
 const Sidebar = () => {
   const menu = [
-    { path: "create-club", label: "Create-Club" },
+    { path: "create-club", label: "Create Club" },
     { path: "my-club", label: "My-Club" },
+    { path: "create-event", label: "Create Event" },
   ];
   return (
     <div className="p-5 space-y-4">

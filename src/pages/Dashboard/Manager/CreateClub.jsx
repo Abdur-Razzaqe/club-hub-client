@@ -28,7 +28,7 @@ const CreateClub = () => {
       membershipFee: parseFloat(data.membershipFee),
       status: "pending",
       member: 0,
-      manageEmail: user?.email,
+      managerEmail: user?.email,
       createdAt: new Date(),
     };
     const res = await axiosSecure.post("/clubs", clubData);

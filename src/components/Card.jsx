@@ -10,7 +10,10 @@ const Card = ({ club }) => {
         className="w-full h-40 object-cover rounded-lg"
       />
       <h3 className="text-xl font-bold mt-3">{club.clubName}</h3>
-      <p className="text-gray-600">{club.description?.slice(0, 80)}...</p>
+      <p className="text-gray-600 font-semibold">
+        Description:
+        <span>{club.description?.slice(0, 10)}...</span>
+      </p>
       <div className="mt-3">
         <p className="text-sm">
           <span className="font-semibold">Category: </span>
