@@ -15,7 +15,7 @@ const AdminStats = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className="flex gap-2  ">
       <Card title="Total Users" value={data.totalUsers} />
       <Card title="Pending Clubs" value={data.clubs?.pending} />
       <Card title="Approved Clubs" value={data.clubs?.approved} />

@@ -15,6 +15,10 @@ import CreateEvent from "../pages/Dashboard/Manager/CreateEvent";
 import Events from "../pages/Events/Events";
 import EventDetails from "../pages/Events/EventDetails";
 
+import AdminStats from "../pages/Dashboard/Admin/AdminStats";
+import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
+import ManageClubs from "../pages/Dashboard/Admin/ManageClubs";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -62,7 +66,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/dashboard",
+    path: "",
     element: (
       <PrivateRoute>
         <DashboardLayout />
@@ -80,6 +84,28 @@ export const router = createBrowserRouter([
       {
         path: "create-event",
         element: <CreateEvent />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <AdminStats />,
+      },
+      {
+        path: "manage-users",
+        element: <ManageUsers />,
+      },
+      {
+        path: "manage-clubs",
+        element: <ManageClubs />,
       },
     ],
   },

@@ -6,26 +6,26 @@ import Sidebar from "../components/Sidebar/Sidebar";
 const DashboardLayout = () => {
   const { role } = useRole();
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen max-w-7xl mx-auto">
       {/* sidebar */}
       <aside className="w-64 bg-base-200 p-5 hidden md:block">
+        <li>
+          <NavLink to="/dashboard">Overview</NavLink>
+        </li>
         <Sidebar />
         {/* role based menu */}
         <ul className="space-y-3">
-          <li>
-            <NavLink to="/dashboard">Overview</NavLink>
-          </li>
           {/* admin */}
           {role === "admin" && (
             <>
               <li>
-                <NavLink to="dashboard/manage-users">Manage Users</NavLink>
+                <NavLink to="manage-users">Manage Users</NavLink>
               </li>
               <li>
-                <NavLink to="dashboard/manage-clubs">Manage Clubs</NavLink>
+                <NavLink to="manage-clubs">Manage Clubs</NavLink>
               </li>
               <li>
-                <NavLink to="dashboard/payments">All Payments</NavLink>
+                <NavLink to="payments">All Payments</NavLink>
               </li>
             </>
           )}
@@ -33,16 +33,16 @@ const DashboardLayout = () => {
           {role === "manager" && (
             <>
               <li>
-                <NavLink to="dashboard/create-club">Create Club</NavLink>
+                <NavLink to="create-club">Create Club</NavLink>
               </li>
               <li>
-                <NavLink to="dashboard/my-clubs">My Clubs</NavLink>
+                <NavLink to="my-clubs">My Clubs</NavLink>
               </li>
               <li>
-                <NavLink to="dashboard/events">Manage Events</NavLink>
+                <NavLink to="events">Manage Events</NavLink>
               </li>
               <li>
-                <NavLink to="dashboard/create-event">Create Event</NavLink>
+                <NavLink to="create-event">Create Event</NavLink>
               </li>
             </>
           )}
