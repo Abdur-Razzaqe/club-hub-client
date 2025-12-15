@@ -4,7 +4,7 @@ import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 
-const MyClubs = () => {
+const MemberClubs = () => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
 
@@ -38,4 +38,4 @@ const MyClubs = () => {
   );
 };
 
-export default MyClubs;
+export default MemberClubs;

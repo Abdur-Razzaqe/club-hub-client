@@ -24,6 +24,10 @@ import MyClubs from "../pages/Dashboard/Manager/MyClubs";
 import EventRegistrations from "../pages/Dashboard/Manager/EventRegistrations";
 import ManageEvent from "../pages/Dashboard/Manager/ManageEvent";
 import AdminRoute from "./AdminRoute";
+import MemberRoute from "./MemberRoute";
+import MemberClubs from "../pages/Dashboard/Members/MemberClubs";
+import MemberEvents from "../pages/Dashboard/Members/MemberEvents";
+import MemberPaymentHistory from "../pages/Dashboard/Members/MemberPaymentHistory";
 
 export const router = createBrowserRouter([
   {
@@ -153,6 +157,38 @@ export const router = createBrowserRouter([
           <ManagerRoute>
             <EventRegistrations />
           </ManagerRoute>
+        ),
+      },
+      {
+        path: "member",
+        element: (
+          <MemberRoute>
+            <ManagerOverview />
+          </MemberRoute>
+        ),
+      },
+      {
+        path: "my-clubs",
+        element: (
+          <MemberRoute>
+            <MemberClubs />
+          </MemberRoute>
+        ),
+      },
+      {
+        path: "my-clubs",
+        element: (
+          <MemberRoute>
+            <MemberEvents />
+          </MemberRoute>
+        ),
+      },
+      {
+        path: "my-clubs",
+        element: (
+          <MemberRoute>
+            <MemberPaymentHistory />
+          </MemberRoute>
         ),
       },
     ],

@@ -2,11 +2,7 @@ import React from "react";
 import { NavLink } from "react-router";
 
 const Sidebar = () => {
-  const menu = [
-    { path: "/dashboard/create-club", label: "Create Club" },
-    { path: "my-club", label: "My-Club" },
-    { path: "create-event", label: "Create Event" },
-  ];
+  const menu = [];
   return (
     <div className="p-5 space-y-4">
       <h2 className="text-2xl font-bold mb-4">Dashboard</h2>

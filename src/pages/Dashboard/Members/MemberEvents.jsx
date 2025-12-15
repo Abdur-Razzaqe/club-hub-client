@@ -3,7 +3,7 @@ import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 
-const MyEvents = () => {
+const MemberEvents = () => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
 
@@ -46,4 +46,4 @@ const MyEvents = () => {
   );
 };
 
-export default MyEvents;
+export default MemberEvents;
