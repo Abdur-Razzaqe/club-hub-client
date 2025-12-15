@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import useRole from "../hooks/useRole";
 import { Navigate } from "react-router";
+import { AuthContext } from "../contexts/AuthContext/AuthContext";
 
 const ManagerRoute = ({ children }) => {
-  const { role, isLoading } = useRole();
+  const { user, loading } = useContext(AuthContext);
+  const { role, roleLoading } = useRole();
 
-  if (isLoading) return <p>Loading...</p>;
-  if (role !== "manager") return <Navigate to="/" />;
+  if (loading || roleLoading) return <p>Loading...</p>;
+  if (!user || role !== "manager") {
+    return <Navigate to="/" replace />;
+  }
   return children;
 };
 

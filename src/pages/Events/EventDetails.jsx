@@ -7,6 +7,7 @@ import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 
 const EventDetails = () => {
   const { id } = useParams();
+  console.log("eventid:", id);
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
   //   const [isRegistered, setIsRegistered] = useState(false);

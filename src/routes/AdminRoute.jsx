@@ -5,13 +5,13 @@ import { Navigate } from "react-router";
 
 const AdminRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
-  const [role, roleLoading] = useRole();
+  const { role, roleLoading } = useRole();
 
   if (loading || roleLoading) {
     return <p>Loading...</p>;
   }
   if (!user || role !== "admin") {
-    return <Navigate to="/" />;
+    return <Navigate to="/" replace />;
   }
   return children;
 };
