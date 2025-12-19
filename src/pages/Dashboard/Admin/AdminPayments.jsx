@@ -1,23 +1,26 @@
 import React from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../../Common/LoadingSpinner";
 
-const Payments = () => {
+const AdminPayments = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: payments = [] } = useQuery({
-    queryKey: ["clubs-admin"],
+  const { data: payments = [], isLoading } = useQuery({
+    queryKey: ["admin-payments"],
     queryFn: async () => {
       const res = await axiosSecure.get("/admin/payments");
       return res.data;
     },
   });
+  if (isLoading) return <LoadingSpinner />;
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Payments</h2>
-      <table className="table">
+      <h2 className="text-2xl font-bold mb-4">All Payments</h2>
+      <table className="table w-full text-center">
         <thead>
           <tr>
+            <th>#</th>
             <th>User</th>
             <th>Amount</th>
             <th>Type</th>
@@ -26,12 +29,14 @@ const Payments = () => {
           </tr>
         </thead>
         <tbody>
-          {payments.map((p) => (
+          {payments.map((p, index) => (
             <tr key={p._id}>
+              <td>{index + 1}</td>
               <td>{p.userEmail}</td>
               <td>{p.amount}</td>
               <td>{p.type}</td>
-              <td>{new Date(p.date).toLocaleDateString()}</td>
+              <td>{p.clubName}</td>
+              <td>{new Date(p.createdAt).toLocaleString()}</td>
             </tr>
           ))}
         </tbody>
@@ -40,4 +45,4 @@ const Payments = () => {
   );
 };
 
-export default Payments;
+export default AdminPayments;

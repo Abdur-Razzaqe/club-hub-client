@@ -19,6 +19,7 @@ const EventDetails = () => {
       console.log(res.data);
       return res.data;
     },
+    enabled: !!id,
   });
 
   const handleRegister = async () => {
@@ -29,36 +30,46 @@ const EventDetails = () => {
         text: "You must be logged in to register!",
       });
     }
-    console.log("event id:", id);
-    console.log("event:", event);
-    await axiosSecure.post("/event-registrations", {
-      eventId: id,
-      userEmail: user.email,
-      clubId: event.clubId,
 
-      //   paymentId: event.isPaid ? paymentIntentId : null,
-    });
-    Swal.fire({
-      icon: "success",
-      title: "Registration",
-      text: " Registered successfully",
-    });
+    try {
+      const payload = {
+        eventId: event._id,
+        paymentId: event.isPaid,
+      };
+
+      const res = await axiosSecure.post("/event-registrations", payload);
+
+      Swal.fire({
+        icon: "success",
+        title: "Registration",
+        text: " Registered successfully",
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Registration failed",
+        text: " error.response?.data?.message || error.message",
+      });
+    }
+    if (isLoading) return <p>Loading...</p>;
+
+    if (!event || Object.keys(event).length === 0) {
+      return <p>event not found</p>;
+    }
   };
-  if (isLoading) return <p>Loading...</p>;
-
-  if (!event || Object.keys(event).length === 0) {
-    return <p>event not found</p>;
-  }
-
   return (
     <div
       key={event?._id}
       className="max-w-4xl mx-auto my-10 p-5 border shadow rounded-xl"
     >
-      <h3 className="text-3xl font-bold">{event.title}</h3>
+      <h3 className="text-3xl font-bold">{event?.title}</h3>
       <p className="text-gray-600 mt-2">{event?.description}</p>
       <p className="mt-4 text-xl">Location: {event?.location}</p>
-      <p className="text-lg">{new Date(event.eventDate).toLocaleString()}</p>
+      <p className="text-lg">
+        {new Date(event?.eventDate).toLocaleDateString()}
+      </p>
       <p className="font-semibold mt-3">
         {event?.isPaid ? `Fee: $${event.eventFee}` : "Free Event"}
       </p>

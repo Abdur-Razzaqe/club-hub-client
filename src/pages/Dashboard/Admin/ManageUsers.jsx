@@ -15,17 +15,24 @@ const ManageUsers = () => {
   });
 
   const changeRole = async (id, role) => {
-    await axiosSecure.patch(`/admin/users/${id}`, { role });
-    Swal.fire("Updated!", "Role Changed", "success");
-    refetch();
-  };
+    try {
+      const res = await axiosSecure.patch(`/users/role/${id}`, { role });
 
+      if (res.data.modifiedCount > 0)
+        Swal.fire("Updated!", `Role Changed to ${role}`, "success");
+      refetch();
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Error!", "role changed failed");
+    }
+  };
   return (
-    <div className="p-6">
+    <div className="p-6 ">
       <h2 className="text-2xl font-bold mb-4">Manage Users</h2>
-      <table className="table">
+      <table className="table text-center">
         <thead>
           <tr>
+            <th>#</th>
             <th>Name</th>
             <th>Email</th>
             <th>Role</th>
@@ -33,9 +40,10 @@ const ManageUsers = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((u) => (
+          {users.map((u, index) => (
             <tr key={u._id}>
-              <td>{u.name}</td>
+              <td>{index + 1}</td>
+              <td>{u.displayName}</td>
               <td>{u.email}</td>
               <td>{u.role}</td>
               <td>
@@ -46,7 +54,7 @@ const ManageUsers = () => {
                   Admin
                 </button>
                 <button
-                  onClick={() => changeRole(u._id, "clubManager")}
+                  onClick={() => changeRole(u._id, "Manager")}
                   className="btn btn-sx"
                 >
                   Manager

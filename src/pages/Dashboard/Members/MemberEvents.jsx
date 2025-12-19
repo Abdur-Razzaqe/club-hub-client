@@ -11,15 +11,13 @@ const MemberEvents = () => {
     queryKey: ["my-events", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/event-registrations/user/${user.email}`
-      );
+      const res = await axiosSecure.get("/member/my-events");
       return res.data;
     },
   });
   return (
     <div className="overflow-x-auto">
-      <table className="table table-zebra">
+      <table className="table table-zebra text-center">
         {/* head */}
         <thead>
           <tr>
@@ -34,9 +32,9 @@ const MemberEvents = () => {
           {events.map((ev, index) => (
             <tr key={ev._id}>
               <th>{index + 1}</th>
-              <td>{ev.eventTitle}</td>
-              <td>{ev.clubName}</td>
-              <td>{new Date(ev.eventDate).toLocaleString()}</td>
+              <td>{ev?.title}</td>
+              <td>{ev?.clubName}</td>
+              <td> {new Date(ev.eventDate).toLocaleString()}</td>
               <td>{ev.status}</td>
             </tr>
           ))}

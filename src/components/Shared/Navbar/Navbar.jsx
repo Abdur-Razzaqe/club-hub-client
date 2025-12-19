@@ -1,9 +1,14 @@
 import { Link, NavLink } from "react-router";
 import Logo from "../../Logo/Logo";
 import useAuth from "../../../hooks/useAuth";
+import { Menu } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
+
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef(null);
   const handleLogOut = () => {
     logOut()
       .then()
@@ -11,6 +16,14 @@ const Navbar = () => {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current(e.target)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const links = (
     <>
@@ -27,25 +40,11 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-base-100 shadow-sm px-4">
+    <div className="navbar  shadow-sm px-4 rounded-xl">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              {" "}
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />{" "}
-            </svg>
+            <Menu />
           </div>
           <ul
             tabIndex={0}
@@ -54,9 +53,8 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">
-          <Logo></Logo>
-        </a>
+
+        <Logo></Logo>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
@@ -83,24 +81,32 @@ const Navbar = () => {
               src={user.photoURL || "https://i.ibb.co/2Fsf1wB/avatar.png"}
               alt="avatar"
               className="w-10 h-10 rounded-full cursor-pointer"
+              onClick={() => setOpen(!open)}
             />
-            <div className="absolute right-0 mt-2  shadow rounded w-40">
-              <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100">
-                Profile
-              </Link>
-              <Link
-                to="/dashboard"
-                className="block px-4 py-2 hover:bg-gray-100"
-              >
-                Dashboard
-              </Link>
-              <button
-                onClick={handleLogOut}
-                className="block px-4 py-2 hover:bg-gray-100"
-              >
-                Logout
-              </button>
-            </div>
+            {open && (
+              <div className="absolute right-0 mt-2  shadow rounded w-40">
+                <Link
+                  to="/profile"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                  onClick={() => setOpen(false)}
+                >
+                  Profile
+                </Link>
+                <Link
+                  to="/dashboard"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                  onClick={() => setOpen(false)}
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={handleLogOut}
+                  className="block px-4 py-2 hover:bg-gray-100"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

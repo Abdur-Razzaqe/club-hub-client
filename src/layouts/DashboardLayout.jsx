@@ -1,11 +1,14 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router";
+import { Navigate, NavLink, Outlet } from "react-router";
 import useRole from "../hooks/useRole";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Logo from "../components/Logo/Logo";
+import LoadingSpinner from "../pages/Common/LoadingSpinner";
 
 const DashboardLayout = () => {
-  const { role } = useRole();
+  const [role, roleLoading] = useRole();
+
+  if (roleLoading) return <LoadingSpinner />;
   return (
     <div className="drawer lg:drawer-open max-w-7xl mx-auto">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -56,11 +59,11 @@ const DashboardLayout = () => {
             {/* List item */}
             <li>
               <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Homepage"
+              // className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+              // data-tip="Homepage"
               >
                 {/* Home icon */}
-                <svg
+                {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   strokeLinejoin="round"
@@ -72,8 +75,8 @@ const DashboardLayout = () => {
                 >
                   <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
                   <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                </svg>
-                <span className="is-drawer-close:hidden">Homepage</span>
+                </svg> */}
+                {/* <span className="is-drawer-close:hidden">Homepage</span> */}
               </button>
             </li>
 
@@ -81,13 +84,13 @@ const DashboardLayout = () => {
               <NavLink
                 to={
                   role === "admin"
-                    ? "/dashboard"
+                    ? "/dashboard/admin"
                     : role === "manager"
                     ? "/dashboard/manager"
                     : "/dashboard/member"
                 }
                 className={({ isActive }) =>
-                  isActive ? "font-bold text-teal-500" : ""
+                  isActive ? "font-bold text-teal-500" : "text-gray-800"
                 }
               >
                 Overview
@@ -99,9 +102,9 @@ const DashboardLayout = () => {
               <>
                 <li>
                   <NavLink
-                    to="manage-users"
+                    to="admin/manage-users"
                     className={({ isActive }) =>
-                      isActive ? "font-bold text-teal-500" : ""
+                      isActive ? "font-bold text-teal-500" : "text-gray-800"
                     }
                   >
                     Manage User
@@ -109,9 +112,9 @@ const DashboardLayout = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="manage-clubs"
+                    to="admin/manage-clubs"
                     className={({ isActive }) =>
-                      isActive ? "font-bold text-teal-500" : ""
+                      isActive ? "font-bold text-teal-500" : "text-gray-800"
                     }
                   >
                     Manage Clubs
@@ -119,9 +122,9 @@ const DashboardLayout = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="payments"
+                    to="admin/payments"
                     className={({ isActive }) =>
-                      isActive ? "font-bold text-teal-500" : ""
+                      isActive ? "font-bold text-teal-500" : "text-gray-800"
                     }
                   >
                     All Payments
@@ -134,9 +137,9 @@ const DashboardLayout = () => {
               <>
                 <li>
                   <NavLink
-                    to="create-club"
+                    to="manager/create-club"
                     className={({ isActive }) =>
-                      isActive ? "font-bold text-teal-500" : ""
+                      isActive ? "font-bold text-teal-500" : "text-gray-800"
                     }
                   >
                     Create Club
@@ -144,9 +147,9 @@ const DashboardLayout = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="my-clubs"
+                    to="manager/my-clubs"
                     className={({ isActive }) =>
-                      isActive ? "font-bold text-teal-500" : ""
+                      isActive ? "font-bold text-teal-500" : "text-gray-800"
                     }
                   >
                     My Clubs
@@ -154,9 +157,19 @@ const DashboardLayout = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="my-events"
+                    to="manager/club-members"
                     className={({ isActive }) =>
-                      isActive ? "font-bold text-teal-500" : ""
+                      isActive ? "font-bold text-teal-500" : "text-gray-800"
+                    }
+                  >
+                    Club Members
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="manager/my-events"
+                    className={({ isActive }) =>
+                      isActive ? "font-bold text-teal-500" : "text-gray-800"
                     }
                   >
                     Manage Events
@@ -164,9 +177,9 @@ const DashboardLayout = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="create-event"
+                    to="manager/create-event"
                     className={({ isActive }) =>
-                      isActive ? "font-bold text-teal-500" : ""
+                      isActive ? "font-bold text-teal-500" : "text-gray-800"
                     }
                   >
                     Create Events
@@ -174,9 +187,9 @@ const DashboardLayout = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="event-registrations/:eventId"
+                    to="manager/events/:eventId/registrations"
                     className={({ isActive }) =>
-                      isActive ? "font-bold text-teal-500" : ""
+                      isActive ? "font-bold text-teal-500" : "text-gray-800"
                     }
                   >
                     Event Registrations
@@ -189,9 +202,9 @@ const DashboardLayout = () => {
               <>
                 <li>
                   <NavLink
-                    to="my-clubs"
+                    to="member/my-clubs"
                     className={({ isActive }) =>
-                      isActive ? "font-bold text-teal-500" : ""
+                      isActive ? "font-bold text-teal-500" : "text-gray-800"
                     }
                   >
                     My Clubs
@@ -199,9 +212,9 @@ const DashboardLayout = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="my-events"
+                    to="member/my-events"
                     className={({ isActive }) =>
-                      isActive ? "font-bold text-teal-500" : ""
+                      isActive ? "font-bold text-teal-500" : "text-gray-800"
                     }
                   >
                     My Events
@@ -209,9 +222,9 @@ const DashboardLayout = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="payments"
+                    to="member/payments"
                     className={({ isActive }) =>
-                      isActive ? "font-bold text-teal-500" : ""
+                      isActive ? "font-bold text-teal-500" : "text-gray-800"
                     }
                   >
                     My Payments
@@ -219,6 +232,16 @@ const DashboardLayout = () => {
                 </li>
               </>
             )}
+            <li>
+              <button
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Settings"
+              >
+                {/* Settings icon */}
+
+                <span className="is-drawer-close:hidden">Profile</span>
+              </button>
+            </li>
             <li>
               <button
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"

@@ -5,7 +5,6 @@ const Sidebar = () => {
   const menu = [];
   return (
     <div className="p-5 space-y-4">
-      <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
       {menu.map((item) => (
         <NavLink
           key={item.path}

@@ -2,56 +2,50 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../../Common/LoadingSpinner";
 
 const MemberOverview = () => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
 
-  const { data: clubs = [] } = useQuery({
-    queryKey: ["member-clubs", user?.email],
+  const { data, isLoading } = useQuery({
+    queryKey: ["member-overview", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/event-registrations/user/${user.email}`
-      );
+      const res = await axiosSecure.get("/member/overview/");
       return res.data;
     },
   });
 
-  const { data: events = [] } = useQuery({
-    queryKey: ["member-events", user?.email],
-    enabled: !!user?.email,
-    queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/event-registrations/user/${user.email}`
-      );
-      return res.data;
-    },
-  });
-
-  const upcomingEvents = events.filter(
-    (ev) => new Date(ev.eventDate) > new Date()
-  );
+  if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="grid md:grid-cols-3 gap-6 mb-6">
-      <div className="p-4 bg-white rounded shadow">
-        <h2 className="text-xl font-bold">Total Clubs Joined</h2>
-        <p className="text-3xl">{clubs.length}</p>
-      </div>
-      <div className="p-4 bg-white rounded shadow">
-        <h2 className="text-xl font-bold">Total Events Registered</h2>
-        <p className="text-3xl">{events.length}</p>
-      </div>
-      <div className="p-4 bg-white rounded shadow">
-        <h2 className="text-xl font-bold">Upcoming Events</h2>
-        <ul>
-          {upcomingEvents.map((ev) => (
-            <li key={ev._id}>
-              {ev.title} - {new Date(ev.eventDate).toLocaleDateString()}
-            </li>
-          ))}
-        </ul>
+    <div>
+      <h1 className="text-2xl font-bold mb-6">Member Overview</h1>
+      <div className="grid md:grid-cols-3 gap-6 mb-6">
+        <div className="p-4 bg-white rounded shadow">
+          <h2 className="text-xl font-bold">Total Clubs Joined</h2>
+          <p className="text-3xl">{data?.totalClubs}</p>
+        </div>
+        <div className="p-4 bg-white rounded shadow">
+          <h2 className="text-xl font-bold">Total Events Registered</h2>
+          <p className="text-3xl">{data?.totalEvents}</p>
+        </div>
+
+        <div className="p-4 bg-white rounded shadow">
+          <h2 className="text-xl font-bold">Upcoming Events</h2>
+          <ul>
+            {data?.upcomingEvents?.length > 0 ? (
+              data.upcomingEvents.map((ev) => (
+                <li key={ev._id}>
+                  {ev.title} - {new Date(ev.eventDate).toLocaleDateString()}
+                </li>
+              ))
+            ) : (
+              <p>No upcomingEvents</p>
+            )}
+          </ul>
+        </div>
       </div>
     </div>
   );

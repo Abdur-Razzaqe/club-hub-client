@@ -19,14 +19,16 @@ const ManageEvent = () => {
     queryKey: ["manager-events", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/manager/events?email=${user.email}`);
+      const res = await axiosSecure.get(
+        `/manager/my-events?email=${user.email}`
+      );
       return res.data;
     },
   });
 
   if (isLoading) return <p>Loading...</p>;
 
-  const handleDelete = async (eventId) => {
+  const handleDelete = async (id) => {
     const confirm = await Swal.fire({
       title: "Are you sure?",
       text: "This will permanently delete the event",
@@ -35,16 +37,20 @@ const ManageEvent = () => {
       confirmButtonText: "Yes, delete it!",
     });
     if (confirm.isConfirmed) {
-      await axiosSecure.delete(`/events/${eventId}`);
-      Swal.fire("Delete!", "Event has been deleted.", "success");
-      refetch();
+      try {
+        await axiosSecure.delete(`/manager/my-events/${id}`);
+        Swal.fire("Delete!", "Event has been deleted.", "success");
+        refetch();
+      } catch (error) {
+        Swal.fire("Error", "Failed to delete event", error);
+      }
     }
   };
   return (
     <div className="overflow-x-auto">
       <h2 className="text-2xl font-bold mb-5">Manage Events</h2>
       <CreateEvent onCreated={refetch} />
-      <table className="table table-zebra">
+      <table className="table table-zebra text-center">
         {/* head */}
         <thead>
           <tr>
@@ -61,12 +67,12 @@ const ManageEvent = () => {
             <tr key={event._id}>
               <th>{index + 1}</th>
               <td>{event.title}</td>
-              <td>{new Date(event.eventDate).toLocaleTimeString()}</td>
+              <td>{new Date(event.eventDate).toLocaleDateString()}</td>
               <td>{event.location}</td>
               <td>{event.isPaid ? `$${event.eventFee}` : "Free"}</td>
               <td className="space-x-2">
                 <button
-                  className="btn btn-sm"
+                  className="btn bg-amber-300 btn-sm"
                   onClick={() => setSelectedEvent(event)}
                 >
                   Update

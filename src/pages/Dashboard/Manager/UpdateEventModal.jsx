@@ -6,14 +6,31 @@ import Swal from "sweetalert2";
 const UpdateEventModal = ({ event, onClose, onUpdate }) => {
   const axiosSecure = useAxiosSecure();
   const { register, handleSubmit } = useForm({
-    defaultValues: event,
+    defaultValues: {
+      title: event.title,
+      description: event.description,
+      date: event.date?.slice(0, 10),
+      location: event.location,
+      isPaid: event.isPaid ? "true" : "false",
+      eventFee: event.eventFee,
+      maxAttendees: event.maxAttendees,
+    },
   });
 
   const handleUpdate = async (data) => {
-    await axiosSecure.put(`/events/${event._id}`, data);
-    Swal.fire("Update!", "Event has been update.", "success");
-    if (onUpdate) onUpdate();
-    onClose();
+    const updateData = {
+      ...data,
+      isPaid: data.isPaid === "true",
+      eventFee: data.isPaid === "true" ? Number(data.eventFee) : 0,
+    };
+    try {
+      await axiosSecure.put(`/manager/my-events/${event._id}`, updateData);
+      Swal.fire("Update!", "Event has been update.", "success");
+      if (onUpdate) onUpdate();
+      onClose();
+    } catch (error) {
+      Swal.fire("Error", "Failed to update event", error);
+    }
   };
 
   return (
@@ -32,9 +49,8 @@ const UpdateEventModal = ({ event, onClose, onUpdate }) => {
             className="textarea textarea-bordered w-full"
           />
           <input
-            {...register("eventDate")}
+            {...register("date")}
             type="date"
-            placeholder="Category"
             className="input input-bordered w-full"
           />
           <input

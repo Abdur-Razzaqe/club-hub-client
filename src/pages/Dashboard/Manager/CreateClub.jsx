@@ -1,12 +1,9 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import axios from "axios";
 
 const CreateClub = () => {
-  const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const { register, handleSubmit, reset } = useForm();
 
@@ -26,10 +23,7 @@ const CreateClub = () => {
       location: data.location,
       bannerImage: bannerUrl,
       membershipFee: parseFloat(data.membershipFee),
-      status: "pending",
       member: 0,
-      managerEmail: user?.email,
-      createdAt: new Date(),
     };
     const res = await axiosSecure.post("/clubs", clubData);
     if (res.data.insertedId) {

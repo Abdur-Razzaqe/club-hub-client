@@ -143,7 +143,9 @@ const Register = () => {
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
-          <button className="btn btn-neutral mt-4 w-full">Register</button>
+          <button className="btn bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500 mt-4 w-[90%]">
+            Register
+          </button>
         </fieldset>
         <p>
           Already have an account?{" "}

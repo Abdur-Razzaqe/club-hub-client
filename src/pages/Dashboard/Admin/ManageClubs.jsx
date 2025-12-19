@@ -1,6 +1,7 @@
 import React from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 const ManageClubs = () => {
   const axiosSecure = useAxiosSecure();
@@ -13,20 +14,34 @@ const ManageClubs = () => {
     },
   });
   const updateStatus = async (id, status) => {
-    await axiosSecure.patch(`/admin/clubs/${id}`, { status });
-    refetch;
+    try {
+      await axiosSecure.patch(`/admin/clubs/${id}`, { status });
+      Swal.fire({
+        icon: "success",
+        title: `Club ${status}`,
+        text: `Club has been ${status} successfully!`,
+      });
+
+      refetch();
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Something went wrong!",
+      });
+      console.error(error);
+    }
   };
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">Manage Clubs</h2>
-      <table className="table">
+      <table className="table text-center">
         <thead>
           <tr>
             <th>Club</th>
             <th>Manager</th>
             <th>Status</th>
-            <th>Members</th>
-            <th>Events</th>
+            <th>Membership Fee</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -35,8 +50,21 @@ const ManageClubs = () => {
             <tr key={c._id}>
               <td>{c.clubName}</td>
               <td>{c.managerEmail}</td>
-              <td>{c.membersCount}</td>
-              <td>{c.eventsCount}</td>
+              <td>
+                <span
+                  className={`badge ${
+                    c.status === "approved"
+                      ? "badge-success"
+                      : c.status === "rejected"
+                      ? "badge-error"
+                      : "badge-warning"
+                  }`}
+                >
+                  {c.status}
+                </span>
+              </td>
+              <td>{c.membershipFee}</td>
+
               <td>
                 <button
                   onClick={() => updateStatus(c._id, "approved")}

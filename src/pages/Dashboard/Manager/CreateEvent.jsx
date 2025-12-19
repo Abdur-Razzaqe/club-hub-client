@@ -23,7 +23,7 @@ const CreateEvent = () => {
       managerEmail: user?.email,
     };
 
-    const res = await axiosSecure.post("/events", eventInfo);
+    const res = await axiosSecure.post("/manager/my-events", eventInfo);
     if (res.data.insertedId) {
       Swal.fire({
         icon: "success",

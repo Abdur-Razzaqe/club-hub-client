@@ -9,7 +9,7 @@ import {
 } from "recharts";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-const membershipChart = () => {
+const MembershipChart = () => {
   const axiosSecure = useAxiosSecure();
   const { data = [] } = useQuery({
     queryKey: ["membership-chart"],
@@ -33,4 +33,4 @@ const membershipChart = () => {
   );
 };
 
-export default membershipChart;
+export default MembershipChart;

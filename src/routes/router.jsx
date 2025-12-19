@@ -6,7 +6,6 @@ import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
-import DashboardHome from "../pages/Dashboard/Manager/ManagerOverview";
 import CreateClub from "../pages/Dashboard/Manager/CreateClub";
 import FeaturedClubs from "../pages/Home/FeaturedClubs/FeaturedClubs";
 import Clubs from "../pages/Clubs/Clubs";
@@ -14,8 +13,6 @@ import ClubDetails from "../pages/ClubDetails/ClubDetails";
 import CreateEvent from "../pages/Dashboard/Manager/CreateEvent";
 import Events from "../pages/Events/Events";
 import EventDetails from "../pages/Events/EventDetails";
-
-import AdminStats from "../pages/Dashboard/Admin/AdminStats";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import ManageClubs from "../pages/Dashboard/Admin/ManageClubs";
 import ManagerRoute from "./ManagerRoute";
@@ -28,11 +25,24 @@ import MemberRoute from "./MemberRoute";
 import MemberClubs from "../pages/Dashboard/Members/MemberClubs";
 import MemberEvents from "../pages/Dashboard/Members/MemberEvents";
 import MemberPaymentHistory from "../pages/Dashboard/Members/MemberPaymentHistory";
+import PaymentSuccess from "../pages/Dashboard/Payments/PaymentSuccess";
+import MemberOverview from "../pages/Dashboard/Members/MemberOverview";
+import AdminOverview from "../pages/Dashboard/Admin/AdminOverview";
+import PaymentCancel from "../pages/Dashboard/Payments/PaymentCancel";
+import AdminPayments from "../pages/Dashboard/Admin/AdminPayments";
+import ClubMembers from "../pages/Dashboard/Manager/ClubMembers";
+import DashboardRole from "../pages/Dashboard/Dashbord/DashboardRole";
+import Profile from "../pages/Common/Profile";
+import ErrorPage from "../pages/ErrorPage";
+import Payments from "../pages/Dashboard/Payments/Payments";
+import DashboardIndex from "../pages/Dashboard/DashboardHome/DashboardHome";
+import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -42,21 +52,35 @@ export const router = createBrowserRouter([
         path: "clubs",
         element: <Clubs />,
       },
+
       {
         path: "featured-clubs",
         element: <FeaturedClubs />,
-      },
-      {
-        path: "clubs/:id",
-        element: <ClubDetails />,
       },
       {
         path: "events",
         element: <Events />,
       },
       {
+        path: "profile",
+        element: <Profile />,
+      },
+      {
+        path: "clubs/:id",
+        element: (
+          <PrivateRoute>
+            <ClubDetails />
+          </PrivateRoute>
+        ),
+      },
+
+      {
         path: "events/:id",
-        element: <EventDetails />,
+        element: (
+          <PrivateRoute>
+            <EventDetails />
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -77,11 +101,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: (
-      <PrivateRoute>
-        <DashboardLayout />
-      </PrivateRoute>
-    ),
+    element: <DashboardLayout />,
     children: [
       {
         index: true,
@@ -91,12 +111,12 @@ export const router = createBrowserRouter([
         path: "admin",
         element: (
           <AdminRoute>
-            <AdminStats />
+            <AdminOverview />
           </AdminRoute>
         ),
       },
       {
-        path: "manage-users",
+        path: "admin/manage-users",
         element: (
           <AdminRoute>
             <ManageUsers />
@@ -104,10 +124,18 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "manage-clubs",
+        path: "admin/manage-clubs",
         element: (
           <AdminRoute>
             <ManageClubs />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin/payments",
+        element: (
+          <AdminRoute>
+            <AdminPayments />
           </AdminRoute>
         ),
       },
@@ -120,7 +148,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "create-club",
+        path: "manager/create-club",
         element: (
           <ManagerRoute>
             <CreateClub />
@@ -128,7 +156,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "my-clubs",
+        path: "manager/my-clubs",
         element: (
           <ManagerRoute>
             <MyClubs />
@@ -136,7 +164,15 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "create-event",
+        path: "manager/club-members",
+        element: (
+          <ManagerRoute>
+            <ClubMembers />
+          </ManagerRoute>
+        ),
+      },
+      {
+        path: "manager/create-event",
         element: (
           <ManagerRoute>
             <CreateEvent />
@@ -144,7 +180,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "my-events",
+        path: "manager/my-events",
         element: (
           <ManagerRoute>
             <ManageEvent />
@@ -152,7 +188,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "event-registrations/:eventId",
+        path: "manager/events/:eventId/registrations",
         element: (
           <ManagerRoute>
             <EventRegistrations />
@@ -163,12 +199,12 @@ export const router = createBrowserRouter([
         path: "member",
         element: (
           <MemberRoute>
-            <ManagerOverview />
+            <MemberOverview />
           </MemberRoute>
         ),
       },
       {
-        path: "my-clubs",
+        path: "member/my-clubs",
         element: (
           <MemberRoute>
             <MemberClubs />
@@ -176,7 +212,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "my-clubs",
+        path: "member/my-events",
         element: (
           <MemberRoute>
             <MemberEvents />
@@ -184,12 +220,20 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "my-clubs",
+        path: "member/payments",
         element: (
           <MemberRoute>
             <MemberPaymentHistory />
           </MemberRoute>
         ),
+      },
+      {
+        path: "/dashboard/payment-success",
+        element: <PaymentSuccess />,
+      },
+      {
+        path: "/dashboard/payment-cancelled",
+        element: <PaymentCancel />,
       },
     ],
   },

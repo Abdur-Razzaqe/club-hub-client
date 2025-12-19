@@ -4,8 +4,26 @@ import { Link } from "react-router";
 
 const HeroSection = () => {
   return (
-    <section className="bg-gradient-to-br from-teal-200 via white to-blue-30 py-10 rounded-2xl">
+    <section className="bg-gradient-to-bl from-teal-200 via white to-blue-30 py-10 rounded-2xl">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+        <motion.div
+          className="hidden md:block"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+        >
+          <motion.img
+            src="https://i.ibb.co.com/mVGJFdDt/640.jpg"
+            alt="ClubHub hero"
+            className="w-full rounded-xl shadow-xl"
+            animate={{ y: [0, -12, 0] }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </motion.div>
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -18,7 +36,7 @@ const HeroSection = () => {
             transition={{ delay: 0.2, duration: 0.7 }}
           >
             Welcome to{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to blue-600 ">
+            <span className="text-transparent bg-clip-text bg-gradient-to-l from-teal-500 to blue-600 ">
               ClubHub
             </span>
           </motion.h1>
@@ -47,32 +65,13 @@ const HeroSection = () => {
               Join a Club
             </Link>
             <Link
-              to="/dashboard/manager/create-club"
+              to="/login"
               className="btn rounded-lg px-6 py-3 text-white bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500 "
             >
               {" "}
               Create a Club
             </Link>
           </motion.div>
-        </motion.div>
-
-        <motion.div
-          className="hidden md:block"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-        >
-          <motion.img
-            src="https://i.ibb.co.com/mVGJFdDt/640.jpg"
-            alt="ClubHub hero"
-            className="w-full rounded-xl shadow-xl"
-            animate={{ y: [0, -12, 0] }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
         </motion.div>
       </div>
     </section>
