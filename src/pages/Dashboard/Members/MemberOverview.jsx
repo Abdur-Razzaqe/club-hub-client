@@ -1,10 +1,10 @@
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../Common/LoadingSpinner";
-import useRole from "../../../hooks/useRole";
+import useAuth from "../../../hooks/useAuth";
 
 const MemberOverview = () => {
-  const [user] = useRole();
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
   const { data, isLoading } = useQuery({

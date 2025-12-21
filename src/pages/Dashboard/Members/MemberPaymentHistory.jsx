@@ -40,7 +40,7 @@ const MemberPaymentHistory = () => {
               <td>${p.amount}</td>
               <td>{p.type}</td>
               <td>{p.clubName}</td>
-              <td> {new Date(p?.eventDate).toLocaleDateString()}</td>
+              <td> {new Date(p?.createdAt).toLocaleDateString()}</td>
               <td>{p.status}</td>
             </tr>
           ))}
