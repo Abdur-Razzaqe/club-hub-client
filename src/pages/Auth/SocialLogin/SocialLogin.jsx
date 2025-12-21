@@ -32,7 +32,7 @@ const SocialLogin = () => {
 
   return (
     <div className="text-center pb-8 ">
-      <p className="mb-2">OR</p>
+      <div className="divider my-6"> OR</div>
       <button
         onClick={handleGoogleSignIn}
         className="btn bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500 text-white border-[#e5e5e5] w-[90%] px-4"

@@ -1,7 +1,12 @@
-import React from "react";
-import { Navigate, NavLink, Outlet } from "react-router";
+import React, { Profiler } from "react";
+import { Link, Navigate, NavLink, Outlet } from "react-router";
 import useRole from "../hooks/useRole";
-import { GrUserAdd, GrUserManager, GrUserNew } from "react-icons/gr";
+import {
+  GrDesktop,
+  GrRestroom,
+  GrUserAdd,
+  GrUserManager,
+} from "react-icons/gr";
 
 import Logo from "../components/Logo/Logo";
 import {
@@ -10,8 +15,10 @@ import {
   CreditCardIcon,
   PlusCircle,
   PlusCircleIcon,
+  Settings,
   User2,
   UserCheck2Icon,
+  UserCircle,
 } from "lucide-react";
 
 const DashboardLayout = () => {
@@ -96,11 +103,11 @@ const DashboardLayout = () => {
                     ? "/dashboard/manager"
                     : "/dashboard/member"
                 }
-                className={({ isActive }) =>
-                  isActive ? "font-bold text-teal-500" : "text-gray-800"
-                }
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Overview"
               >
-                <span>Overview</span>
+                <GrDesktop />
+                <span className="is-drawer-close:hidden">Overview</span>
               </NavLink>
             </li>
 
@@ -221,67 +228,54 @@ const DashboardLayout = () => {
                 <li>
                   <NavLink
                     to="member/my-clubs"
-                    className={({ isActive }) =>
-                      isActive ? "font-bold text-teal-500" : "text-gray-800"
-                    }
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My Clubs"
                   >
-                    My Clubs
+                    <GrRestroom />
+                    <span className="is-drawer-close:hidden"> My Clubs</span>
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
                     to="member/my-events"
-                    className={({ isActive }) =>
-                      isActive ? "font-bold text-teal-500" : "text-gray-800"
-                    }
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My Events"
                   >
-                    My Events
+                    <Calendar />
+                    <span className="is-drawer-close:hidden"> My Events</span>
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
                     to="member/payments"
-                    className={({ isActive }) =>
-                      isActive ? "font-bold text-teal-500" : "text-gray-800"
-                    }
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My Events"
                   >
-                    My Payments
+                    <CreditCardIcon />
+                    <span className="is-drawer-close:hidden">My Payments</span>
                   </NavLink>
                 </li>
               </>
             )}
 
             <li>
-              <button
+              <Link
+                to={"/profile"}
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Settings"
+                data-tip="Profile"
               >
-                {/* Settings icon */}
+                <UserCircle />
 
                 <span className="is-drawer-close:hidden">Profile</span>
-              </button>
+              </Link>
             </li>
             <li>
               <button
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Settings"
               >
-                {/* Settings icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
-                  className="my-1.5 inline-block size-4"
-                >
-                  <path d="M20 7h-9"></path>
-                  <path d="M14 17H5"></path>
-                  <circle cx="17" cy="17" r="3"></circle>
-                  <circle cx="7" cy="7" r="3"></circle>
-                </svg>
+                <Settings />
+
                 <span className="is-drawer-close:hidden">Settings</span>
               </button>
             </li>
