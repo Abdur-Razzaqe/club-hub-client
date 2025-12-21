@@ -35,8 +35,8 @@ const UpdateClubModal = ({ club, onClose, onUpdate }) => {
   };
   if (!club) return null;
   return (
-    <div className="fixed inset-0 bg-white bg-opacity-40 flex justify-center items-center">
-      <div className="bg-white p-6 rounded-lg w-96">
+    <div className=" modal modal-open">
+      <div className=" modal-box">
         <h2 className="text-xl text-center font-bold mb-4">Update Club</h2>
         <form onSubmit={handleSubmit(handleUpdate)} className="space-y-3">
           <input

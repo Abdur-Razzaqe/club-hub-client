@@ -14,7 +14,7 @@ const CreateEvent = () => {
       clubId: data.clubId,
       title: data.title,
       description: data.description,
-      eventDate: data.eventDate,
+      eventDate: new Date(data.eventDate),
       location: data.location,
       isPaid: data.isPaid === "true",
       eventFee: data.eventFee ? parseFloat(data.eventFee) : 0,

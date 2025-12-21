@@ -4,6 +4,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
+import { Calendar, Mail, MapPin, Tag } from "lucide-react";
 
 const ClubDetails = () => {
   const { id } = useParams();
@@ -62,24 +63,62 @@ const ClubDetails = () => {
           <img
             src={club.bannerImage}
             alt="club banner"
-            className="w-full h-64 md:h-80 object-cover rounded-xl"
+            className="w-full h-70 md:h-full object-cover rounded-xl"
           />
         </div>
 
         <div className="space-y-3">
-          <h2 className="text-2xl font-bold text-gray-800">{club.clubName}</h2>
-          <p className="text-gray-600 leading-relaxed ">
-            <span className="font-semibold ">Description:</span>{" "}
-            {club.description}
-          </p>
-          <div className="space-y-1 text-sm">
-            <p>
-              <span className="font-semibold">Category: </span> {club.category}
-            </p>
-            <p className="text-sm">
-              <span className="font-semibold">Location:</span> {club.location}
+          <h2 className="text-3xl lg:text-4xl font-extrabold text-gray-900 mb-2">
+            {club.clubName}
+          </h2>
+          <div className="bg-gray-50 p-4 rounded-xl border-l-4 border-teal-500">
+            <p className="text-gray-700 leading-relaxed">
+              Description: {club.description}
             </p>
           </div>
+          <div className="space-y-1 text-sm">
+            <p>
+              <span className="font-semibold">Category: </span>{" "}
+              <span className="bg-teal-500 rounded-full px-4 text-white">
+                {club.category}
+              </span>
+            </p>
+          </div>
+          <div className="flex justify-start items-center text-gray-500 text-sm gap-30 px-4 ">
+            <span className="flex items-center gap-1">
+              <MapPin size={16} className="text-teal-500" />
+              Location: {club.location}
+            </span>
+            <span className="flex items-center gap-1">
+              <Calendar size={16} className="text-teal-500" />
+              {new Date(club.createdAt).toLocaleDateString()}
+            </span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <div className="flex items-center gap-3 text-gray-600">
+              <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
+                <Mail size={18} />
+              </div>
+              <div>
+                <p className="text-[10px] uppercase font-bold text-gray-400">
+                  Manager
+                </p>
+                <p className="text-sm font-medium">{club.managerEmail}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 text-gray-600">
+              <div className="p-2 bg-purple-50 rounded-lg text-purple-600">
+                <Tag size={18} />
+              </div>
+              <div>
+                <p className="text-[10px] uppercase font-bold text-gray-400">
+                  Status
+                </p>
+                <p className="text-sm font-medium">{club.status}</p>
+              </div>
+            </div>
+          </div>
+
           <div className="mt-4">
             <p className="text-sm font-semibold text-teal-600">
               Membership Fee:{" "}

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import SocialLogin from "../SocialLogin/SocialLogin";
-import Navbar from "../../../components/Shared/Navbar/Navbar";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const {
@@ -22,8 +22,23 @@ const Login = () => {
       .then((result) => {
         console.log(result.user);
         navigate(location?.state || "/");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Login Successfully!",
+          text: "Welcome back to ClubHub.",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((error) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Login Failed!",
+          text: "Something went wrong!.",
+          confirmButtonText: "Please Try Again",
+        });
         console.log(error);
       });
   };

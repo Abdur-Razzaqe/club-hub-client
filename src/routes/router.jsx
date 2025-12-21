@@ -31,11 +31,8 @@ import AdminOverview from "../pages/Dashboard/Admin/AdminOverview";
 import PaymentCancel from "../pages/Dashboard/Payments/PaymentCancel";
 import AdminPayments from "../pages/Dashboard/Admin/AdminPayments";
 import ClubMembers from "../pages/Dashboard/Manager/ClubMembers";
-import DashboardRole from "../pages/Dashboard/Dashbord/DashboardRole";
 import Profile from "../pages/Common/Profile";
 import ErrorPage from "../pages/ErrorPage";
-import Payments from "../pages/Dashboard/Payments/Payments";
-import DashboardIndex from "../pages/Dashboard/DashboardHome/DashboardHome";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 
 export const router = createBrowserRouter([
@@ -48,6 +45,7 @@ export const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
+
       {
         path: "clubs",
         element: <Clubs />,
@@ -228,11 +226,11 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/payment-success",
+        path: "payment-success",
         element: <PaymentSuccess />,
       },
       {
-        path: "/dashboard/payment-cancelled",
+        path: "payment-cancelled",
         element: <PaymentCancel />,
       },
     ],

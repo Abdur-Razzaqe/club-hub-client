@@ -35,7 +35,7 @@ const EventRegistrations = () => {
     <div>
       <div className="overflow-x-auto">
         <h2 className="text-2xl font-bold mb-5">Event Registrations</h2>
-        {registrations.length > 0 ? (
+        {registrations.length === 0 ? (
           <table className="table table-zebra">
             {/* head */}
             <thead>
@@ -50,7 +50,7 @@ const EventRegistrations = () => {
               {registrations.map((reg, index) => (
                 <tr key={reg._id}>
                   <th>{index + 1}</th>
-                  <td>{reg.userEmail || "N/A"}</td>
+                  <td>{reg.userEmail}</td>
                   <td>
                     <span
                       className={`badge ${
@@ -62,11 +62,9 @@ const EventRegistrations = () => {
                       {reg.status || "Pending"}
                     </span>
                   </td>
-                  <td>
-                    {reg.registeredAt
-                      ? new Date(reg.registeredAt).toLocaleString()
-                      : "Date not available"}
-                  </td>
+
+                  <td></td>
+                  <td>{new Date(reg.registeredAt).toLocaleDateString()}</td>
                 </tr>
               ))}
             </tbody>

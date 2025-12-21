@@ -1,18 +1,19 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../Common/LoadingSpinner";
+import useRole from "../../../hooks/useRole";
 
 const MemberOverview = () => {
-  const { user } = useContext(AuthContext);
+  const [user] = useRole();
   const axiosSecure = useAxiosSecure();
 
   const { data, isLoading } = useQuery({
     queryKey: ["member-overview", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get("/member/overview/");
+      const res = await axiosSecure.get(`/member/overview/${user?.email}`);
+      console.log("overview", res.data);
+
       return res.data;
     },
   });
@@ -38,7 +39,8 @@ const MemberOverview = () => {
             {data?.upcomingEvents?.length > 0 ? (
               data.upcomingEvents.map((ev) => (
                 <li key={ev._id}>
-                  {ev.title} - {new Date(ev.eventDate).toLocaleDateString()}
+                  <span>{ev.title}</span>{" "}
+                  <span>{new Date(ev.eventDate).toLocaleDateString()}</span>
                 </li>
               ))
             ) : (

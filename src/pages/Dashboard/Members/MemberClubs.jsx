@@ -15,7 +15,7 @@ const MemberClubs = () => {
       const res = await axiosSecure.get(
         `/event-registrations/user/${user.email}`
       );
-      return res.data.filter((m) => m.status === "resigtered");
+      return res.data.filter((m) => m.status === "registered");
     },
   });
   return (

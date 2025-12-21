@@ -1,15 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 import LoadingSpinner from "../../Common/LoadingSpinner";
-import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
+
+import useRole from "../../../hooks/useRole";
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
-  const { user } = useContext(AuthContext);
+  const [user, userLoading] = useRole();
   const clubId = searchParams.get("clubsId");
 
   const axiosSecure = useAxiosSecure();
@@ -51,7 +52,7 @@ const PaymentSuccess = () => {
 
     confirmPayment();
   }, [clubId, axiosSecure]);
-  if (loading) {
+  if (loading || userLoading) {
     return <LoadingSpinner />;
   }
   return (

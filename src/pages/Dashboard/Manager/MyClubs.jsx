@@ -81,7 +81,55 @@ const MyClubs = () => {
           onUpdate={refetch}
         />
       )}{" "}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="overflow-x-auto">
+        <table className="table table-zebra">
+          {/* head */}
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Club Name</th>
+              <th>Category</th>
+              <th>Location</th>
+              <th>Fee</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {clubs.map((club, i) => (
+              <tr key={club._id}>
+                <th>{i + 1}</th>
+                <td>{club.clubName}</td>
+                <td>{club.category}</td>
+                <td>{club.location}</td>
+                <td>
+                  {club.membershipFee > 0 ? `$${club.membershipFee}` : "Free"}
+                </td>
+                <td>
+                  <span
+                    className={`badge mt-2 ${
+                      club.status === "approved"
+                        ? "badge-success"
+                        : "badge-warning"
+                    }`}
+                  >
+                    {club.status}
+                  </span>
+                </td>
+                <td>
+                  <button
+                    onClick={() => setSelectedClub(club)}
+                    className="btn btn-sm btn-outline mt-3"
+                  >
+                    Update
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {clubs.map((club) => (
           <div
             key={club._id}
@@ -112,7 +160,7 @@ const MyClubs = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
       <UpdateClubModal />
     </div>
   );
