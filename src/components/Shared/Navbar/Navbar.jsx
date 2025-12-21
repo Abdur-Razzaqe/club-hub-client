@@ -9,43 +9,59 @@ const Navbar = () => {
 
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const handleLogOut = () => {
-    logOut()
-      .then()
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleLogOut = async () => {
+    try {
+      await logOut();
+      setOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current(e.target)) setOpen(false);
+      if (dropdownRef.current && !dropdownRef.contains(e.target))
+        setOpen(false);
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const navLinkClass = ({ isActive }) =>
+    `px-3 py-2 font-medium transition-all duration-300
+  ${
+    isActive
+      ? "text-teal-500 border-b-2 border-teal-500"
+      : "text-gray-700 hover:text-teal-500"
+  }`;
+
   const links = (
     <>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/" end className={navLinkClass}>
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/clubs">Clubs</NavLink>
+        <NavLink to="/clubs" className={navLinkClass}>
+          Clubs
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/events">Events</NavLink>
+        <NavLink to="/events" className={navLinkClass}>
+          Events
+        </NavLink>
       </li>
     </>
   );
 
   return (
-    <div className="navbar  shadow-sm px-4 rounded-xl">
+    <div className="navbar  shadow-sm px-6 rounded-xl">
       <div className="navbar-start">
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+          <label tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <Menu />
-          </div>
+          </label>
           <ul
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
@@ -56,6 +72,7 @@ const Navbar = () => {
 
         <Logo></Logo>
       </div>
+
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
@@ -76,7 +93,7 @@ const Navbar = () => {
             </Link>
           </>
         ) : (
-          <div className="relative group">
+          <div ref={dropdownRef} className="relative ">
             <img
               src={user.photoURL || "https://i.ibb.co/2Fsf1wB/avatar.png"}
               alt="avatar"
@@ -84,7 +101,15 @@ const Navbar = () => {
               onClick={() => setOpen(!open)}
             />
             {open && (
-              <div className="absolute right-0 mt-2  shadow rounded w-40">
+              <div className="absolute right-0 mt-3 w-44 bg-base-100 shadow-lg rounded-xl overflow-hidden ">
+                <div className="px-4 py-2 border-b">
+                  <p className="text-sm font-semibold truncate">
+                    {user?.displayName || "User"}
+                  </p>
+                  <p className="text-sm text-gray-500 truncate">
+                    {user?.email}
+                  </p>
+                </div>
                 <Link
                   to="/profile"
                   className="block px-4 py-2 hover:bg-gray-100"
