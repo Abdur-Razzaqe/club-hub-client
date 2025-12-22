@@ -34,6 +34,7 @@ import ClubMembers from "../pages/Dashboard/Manager/ClubMembers";
 import Profile from "../pages/Common/Profile";
 import ErrorPage from "../pages/ErrorPage";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
+import Payments from "../pages/Dashboard/Payments/Payments";
 
 export const router = createBrowserRouter([
   {
@@ -223,6 +224,14 @@ export const router = createBrowserRouter([
           <MemberRoute>
             <MemberPaymentHistory />
           </MemberRoute>
+        ),
+      },
+      {
+        path: "/dashboard/payments/:clubId",
+        element: (
+          <PrivateRoute>
+            <Payments />
+          </PrivateRoute>
         ),
       },
       {

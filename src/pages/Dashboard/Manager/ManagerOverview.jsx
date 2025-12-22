@@ -20,7 +20,7 @@ const ManagerOverview = () => {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Manger Overview</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 text-center">
         <div className="bg-white  shadow p-4 rounded-xl">
           <h3 className="text-lg">Clubs Managed </h3>
           <p className="text-3xl font-bold">{data.totalClubs || 0}</p>

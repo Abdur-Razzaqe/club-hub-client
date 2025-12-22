@@ -19,7 +19,7 @@ const AdminOverview = () => {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">Admin Overview</h1>
-      <div className="flex justify-between items-center gap-2  ">
+      <div className="flex justify-between items-center gap-3 text-center grid grid-cols-2 md:grid-cols-3 ">
         <Card title="Total Users" value={data.totalUsers} />
         <Card title="Pending Clubs" value={data.clubs?.pending} />
         <Card title="Approved Clubs" value={data.clubs?.approved} />
@@ -37,7 +37,7 @@ const AdminOverview = () => {
 const Card = ({ title, value }) => (
   <div className="bg-white p-5 shadow rounded-xl">
     <h3 className="text-gray-500">{title}</h3>
-    <p className="text-3xl font-bold">{value}</p>
+    <p className="text-xl font-bold">{value}</p>
   </div>
 );
 

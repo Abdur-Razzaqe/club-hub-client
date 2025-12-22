@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
@@ -6,21 +6,21 @@ import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 import LoadingSpinner from "../../Common/LoadingSpinner";
 
-import useRole from "../../../hooks/useRole";
+import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
-  const [user, userLoading] = useRole();
+  const { user, loading: authLoading } = useContext(AuthContext);
   const clubId = searchParams.get("clubsId");
+  const amount = searchParams.get("amount");
 
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
-  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    if (!clubId) return;
+    if (!clubId || !user?.email || !amount) return;
 
     const confirmPayment = async () => {
       try {
@@ -28,8 +28,8 @@ const PaymentSuccess = () => {
           clubId,
           userEmail: user?.email,
         });
+
         if (res.data?.message) {
-          setSuccess(true);
           Swal.fire({
             icon: "success",
             title: "Payment Successful!",
@@ -51,8 +51,8 @@ const PaymentSuccess = () => {
     };
 
     confirmPayment();
-  }, [clubId, axiosSecure]);
-  if (loading || userLoading) {
+  }, [clubId, user?.email, axiosSecure]);
+  if (loading || authLoading) {
     return <LoadingSpinner />;
   }
   return (

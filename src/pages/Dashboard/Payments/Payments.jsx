@@ -13,6 +13,7 @@ const Payments = () => {
 
   const { data: club, isLoading } = useQuery({
     queryKey: ["clubs", clubId],
+    enabled: !!clubId,
     queryFn: async () => {
       const res = await axiosSecure.get(`/clubs/${clubId}`);
       return res.data;
@@ -20,6 +21,10 @@ const Payments = () => {
   });
 
   const handleCheckout = async () => {
+    if (!user?.email) {
+      alert("please login to continue payment");
+      return;
+    }
     const paymentInfo = {
       clubId: club._id,
       clubName: club.clubName,

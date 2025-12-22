@@ -4,28 +4,36 @@ import Logo from "../../Logo/Logo";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-700 text-gray-300 mt-12">
-      <div className="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-8">
-        <div>
+    <footer className="bg-green-100 text-gray-700 ">
+      <div className="max-w-7xl mx-auto px-4 py-2 grid md:grid-cols-3 gap-10">
+        <div className="space-y-4 text-center md:text-left">
           {/* about section */}
-          <Logo></Logo>
+          <div className="flex justify-center md:justify-start">
+            <Logo></Logo>
+          </div>
           <p>
             ClubHub is your gateway to discovering local clubs, joining
             communities, and exploring exciting events-anytime, anywhere.
           </p>
         </div>
         {/* contact section */}
-        <div>
-          <h2 className="text-xl font-bold text-white mb-3">Contact</h2>
-          <p>Email: support@clubhub.com</p>
-          <p>Phone: +8801952558684</p>
-          <p>Location: Dhaka, Bangladesh.</p>
+        <div className="text-center md:text-left">
+          <h2 className="text-lg font-semibold text-white mb-4">Contact</h2>
+          <ul>
+            <li>
+              Email: <span className="text-gray-400">support@clubhub.com</span>
+            </li>
+            <li>
+              Phone: <span className="text-gray-400">+8801952558684</span>
+            </li>
+            <li>Location: Dhaka, Bangladesh.</li>
+          </ul>
         </div>
 
         {/* social links */}
 
-        <div>
-          <h2 className="text-xl font-bold text-white mb-3">Follow Us</h2>
+        <div className="text-center md:text-left">
+          <h2 className="text-lg font-semibold text-white mb-4">Follow Us</h2>
           <div className="flex items-center gap-5 text-2xl">
             <a
               href="https://github.com"
@@ -49,8 +57,8 @@ const Footer = () => {
       </div>
 
       {/* bottom bar */}
-      <div className="border-t border-gray-700 py-4 text-center text-gray-400 text-sm">
-        {new Date().getFullYear()} ClubHub. All rights reserved.
+      <div className="border-t border-gray-700  text-center text-gray-400 text-sm">
+        ©{new Date().getFullYear()} ClubHub. All rights reserved.
       </div>
     </footer>
   );

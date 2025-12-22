@@ -20,7 +20,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.contains(e.target))
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target))
         setOpen(false);
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -56,7 +56,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar  shadow-sm px-6 rounded-xl">
+    <div className="navbar  shadow-sm px-6 rounded-xl bg-white/80">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

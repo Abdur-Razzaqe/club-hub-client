@@ -21,9 +21,9 @@ const MemberOverview = () => {
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">Member Overview</h1>
-      <div className="grid md:grid-cols-3 gap-6 mb-6">
+    <div className="">
+      <h1 className="text-2xl font-bold mb-6">Welcome ({user.displayName})</h1>
+      <div className="grid md:grid-cols-3 gap-6 mb-6 text-center">
         <div className="p-4 bg-white rounded shadow">
           <h2 className="text-xl font-bold">Total Clubs Joined</h2>
           <p className="text-3xl">{data?.totalClubs}</p>
