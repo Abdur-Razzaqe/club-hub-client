@@ -65,16 +65,16 @@ const ManageClubs = () => {
               </td>
               <td>{c.membershipFee}</td>
 
-              <td>
+              <td className="gap-2">
                 <button
                   onClick={() => updateStatus(c._id, "approved")}
-                  className="btn btn-sx"
+                  className="btn btn-active btn-accent mr-2 "
                 >
                   Approved
                 </button>
                 <button
                   onClick={() => updateStatus(c._id, "rejected")}
-                  className="btn btn-sx"
+                  className="btn btn-active btn-error"
                 >
                   Rejected
                 </button>

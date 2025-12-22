@@ -41,5 +41,8 @@ Firebase token verification
 Role-based route protection
 Environment variables for all secrets
 
+Admin Email: admin@gmail.com
+Password: Ab1234@
+
 Live Links
 Client:

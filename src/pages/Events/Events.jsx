@@ -3,13 +3,18 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../Common/LoadingSpinner";
 import { motion } from "framer-motion";
+import { useState } from "react";
 const Events = () => {
   const axiosSecure = useAxiosSecure();
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
 
   const { data: events = [], isLoading } = useQuery({
-    queryKey: ["events"],
+    queryKey: ["events", search, category],
     queryFn: async () => {
-      const res = await axiosSecure.get("/events");
+      const res = await axiosSecure.get(
+        `/events?search=${search}&category=${category}`
+      );
       return res.data;
     },
   });
@@ -28,6 +33,51 @@ const Events = () => {
         </h2>
         <div className="h-1 w-20 bg-primary mx-auto mt-2 rounded-full"></div>
       </motion.div>
+
+      <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
+        <label className="input">
+          <svg
+            className="h-[1em] opacity-50"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <g
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              strokeWidth="2.5"
+              fill="none"
+              stroke="currentColor"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.3-4.3"></path>
+            </g>
+          </svg>
+          <input
+            type="search"
+            className="grow"
+            placeholder="Search event by name...."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </label>
+
+        <input
+          type="text"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="input"
+          placeholder="Search Category..."
+          list="browsers"
+        />
+        <datalist id="browsers">
+          <option value="All Categories"></option>
+          <option value="Music"></option>
+          <option value="Photograph"></option>
+          <option value="Sports"></option>
+          <option value="Atr"></option>
+          <option value="Tech"></option>
+        </datalist>
+      </div>
       {events.length === 0 && (
         <p className="text-center text-gray-500 text-lg">No events available</p>
       )}

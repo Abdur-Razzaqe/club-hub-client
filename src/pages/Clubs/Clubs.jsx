@@ -6,14 +6,14 @@ import LoadingSpinner from "../Common/LoadingSpinner";
 
 const Clubs = () => {
   const axiosSecure = useAxiosSecure();
-  const [search, setSearch] = useState();
-  const [category, setCategory] = useState();
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
 
   const { data: clubs = [], isLoading } = useQuery({
     queryKey: ["clubs", search, category],
     queryFn: async () => {
       const result = await axiosSecure.get(
-        `/clubs?search=${search}&category=${category}}`
+        `/clubs?search=${search}&category=${category}`
       );
       return result.data;
     },

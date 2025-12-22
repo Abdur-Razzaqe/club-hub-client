@@ -119,7 +119,7 @@ const MyClubs = () => {
                 <td>
                   <button
                     onClick={() => setSelectedClub(club)}
-                    className="btn btn-sm btn-outline mt-3"
+                    className="btn btn-sm btn-outline bg-yellow-300 mt-3"
                   >
                     Update
                   </button>
@@ -129,38 +129,6 @@ const MyClubs = () => {
           </tbody>
         </table>
       </div>
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {clubs.map((club) => (
-          <div
-            key={club._id}
-            className="bg-white rounded-xl shadow overflow-hidden"
-          >
-            <img
-              src={club.bannerImage}
-              alt="Banner Image"
-              className="h-40 w-full object-cover"
-            />
-            <div className="p-4">
-              <h3 className="text-xl font-bold">{club.clubName}</h3>
-              <p className="text-sm text-gray-500">{club.location}</p>
-              <p className="text-sm">{club.membershipFee}</p>
-              <span
-                className={`badge mt-2 ${
-                  club.status === "approved" ? "badge-success" : "badge-warning"
-                }`}
-              >
-                {club.status}
-              </span>
-              <button
-                onClick={() => setSelectedClub(club)}
-                className="btn btn-sm btn-outline mt-3"
-              >
-                Update
-              </button>
-            </div>
-          </div>
-        ))}
-      </div> */}
       <UpdateClubModal />
     </div>
   );

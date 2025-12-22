@@ -49,19 +49,19 @@ const ManageUsers = () => {
               <td>
                 <button
                   onClick={() => changeRole(u._id, "admin")}
-                  className="btn btn-sx"
+                  className="btn btn bg-green-500"
                 >
                   Admin
                 </button>
                 <button
                   onClick={() => changeRole(u._id, "Manager")}
-                  className="btn btn-sx"
+                  className="btn btn-sx bg-teal-400 ml-1"
                 >
                   Manager
                 </button>
                 <button
                   onClick={() => changeRole(u._id, "member")}
-                  className="btn btn-sx"
+                  className="btn btn-sx bg-yellow-500 ml-1"
                 >
                   Member
                 </button>
