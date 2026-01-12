@@ -43,4 +43,8 @@ Environment variables for all secrets
 
 
 Live Links
+<<<<<<< HEAD
 Client: https://precious-tulumba-e550bb.netlify.app/
+=======
+Client: https://club-hub-eleven.netlify.app/
+>>>>>>> f7c9003 (Project Polishing all completed)

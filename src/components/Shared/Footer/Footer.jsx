@@ -1,64 +1,101 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { Link } from "react-router";
 import Logo from "../../Logo/Logo";
 
 const Footer = () => {
   return (
-    <footer className="bg-green-100 text-gray-700 ">
-      <div className="max-w-7xl mx-auto px-4 py-2 grid md:grid-cols-3 gap-10">
-        <div className="space-y-4 text-center md:text-left">
-          {/* about section */}
-          <div className="flex justify-center md:justify-start">
-            <Logo></Logo>
-          </div>
-          <p>
-            ClubHub is your gateway to discovering local clubs, joining
-            communities, and exploring exciting events-anytime, anywhere.
+    <footer className="bg-teal-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300">
+      <div className="max-w-7xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-4">
+        {/* About */}
+        <div className="space-y-4">
+          <Logo />
+          <p className="text-sm">
+            ClubHub is your gateway to discovering clubs, joining communities,
+            and exploring exciting events anytime, anywhere.
           </p>
         </div>
-        {/* contact section */}
-        <div className="text-center md:text-left">
-          <h2 className="text-lg font-semibold text-white mb-4">Contact</h2>
-          <ul>
+
+        {/* Quick Links */}
+        <div>
+          <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+            Quick Links
+          </h2>
+          <ul className="space-y-2 text-sm">
             <li>
-              Email: <span className="text-gray-400">support@clubhub.com</span>
+              <Link to="/" className="hover:text-teal-500">
+                Home
+              </Link>
             </li>
             <li>
-              Phone: <span className="text-gray-400">+8801952558684</span>
+              <Link to="/clubs" className="hover:text-teal-500">
+                Clubs
+              </Link>
             </li>
-            <li>Location: Dhaka, Bangladesh.</li>
+            <li>
+              <Link to="/events" className="hover:text-teal-500">
+                Events
+              </Link>
+            </li>
+            <li>
+              <Link to="/featured-clubs" className="hover:text-teal-500">
+                Featured Clubs
+              </Link>
+            </li>
+            <li>
+              <Link to="/profile" className="hover:text-teal-500">
+                Profile
+              </Link>
+            </li>
           </ul>
         </div>
 
-        {/* social links */}
+        {/* Contact */}
+        <div>
+          <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+            Contact
+          </h2>
+          <ul className="space-y-2 text-sm">
+            <li>Email: support@clubhub.com</li>
+            <li>Phone: +880 1952-558684</li>
+            <li>Location: Dhaka, Bangladesh</li>
+          </ul>
+        </div>
 
-        <div className="text-center md:text-left">
-          <h2 className="text-lg font-semibold text-white mb-4">Follow Us</h2>
-          <div className="flex items-center gap-5 text-2xl">
+        {/* Social */}
+        <div>
+          <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+            Follow Us
+          </h2>
+          <div className="flex gap-5 text-2xl">
             <a
               href="https://github.com"
-              target="blank"
-              className="hover:text-white"
+              target="_blank"
+              className="hover:text-teal-500"
             >
               <FaGithub />
             </a>
             <a
               href="https://linkedin.com"
-              target="blank"
-              className="hover:text-white"
+              target="_blank"
+              className="hover:text-teal-500"
             >
               <FaLinkedin />
             </a>
-            <a href="https://x.com" target="blank" className="hover:text-white">
+            <a
+              href="https://x.com"
+              target="_blank"
+              className="hover:text-teal-500"
+            >
               <FaXTwitter />
             </a>
           </div>
         </div>
       </div>
 
-      {/* bottom bar */}
-      <div className="border-t border-gray-700  text-center text-gray-400 text-sm">
-        ©{new Date().getFullYear()} ClubHub. All rights reserved.
+      {/* Bottom Bar */}
+      <div className="border-t border-gray-300 dark:border-gray-700 py-4 text-center text-sm">
+        © {new Date().getFullYear()} ClubHub. All rights reserved.
       </div>
     </footer>
   );

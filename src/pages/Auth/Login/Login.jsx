@@ -39,8 +39,10 @@ const Login = () => {
           confirmButtonText: "Please Try Again",
         });
       })
+
       .finally(() => setLoading(false));
   };
+
   if (loading) return <LoadingSpinner />;
   return (
     <div className=" bg-base-200 min-h-screen flex items-center justify-center px-4">
@@ -87,6 +89,7 @@ const Login = () => {
         </form>
 
         <SocialLogin></SocialLogin>
+
         <p className=" text-center text-sm mt-6">
           New to ClubHub{" "}
           <Link

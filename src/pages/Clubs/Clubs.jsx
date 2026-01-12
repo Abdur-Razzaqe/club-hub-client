@@ -1,8 +1,28 @@
 import { useQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 import Card from "../../components/Card";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useState } from "react";
 import LoadingSpinner from "../Common/LoadingSpinner";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+};
 
 const Clubs = () => {
   const axiosSecure = useAxiosSecure();
@@ -20,33 +40,38 @@ const Clubs = () => {
   });
 
   if (isLoading) return <LoadingSpinner />;
+
   return (
-    <div>
-      <h2 className="text-4xl font-extrabold text-gray-800 tracking -tight text-center pt-10">
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      {/* Title */}
+      <h2 className="text-4xl font-extrabold text-gray-800 dark:text-white text-center pt-10">
         All Clubs
       </h2>
-      <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
-        <label className="input">
+
+      {/* Search + Filter */}
+      <motion.div
+        className="flex flex-col md:flex-row items-center justify-center gap-4 my-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        <label className="input flex items-center gap-2">
           <svg
             className="h-[1em] opacity-50"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
           >
-            <g
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth="2.5"
-              fill="none"
-              stroke="currentColor"
-            >
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.3-4.3"></path>
-            </g>
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
           </svg>
           <input
             type="search"
             className="grow"
-            placeholder="Search clubs by name...."
+            placeholder="Search clubs..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -57,25 +82,37 @@ const Clubs = () => {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           className="input"
-          placeholder="Search Category..."
-          list="browsers"
+          placeholder="Category"
+          list="categories"
         />
-        <datalist id="browsers">
-          <option value="All Categories"></option>
-          <option value="Music"></option>
-          <option value="Sports"></option>
-          <option value="Atr"></option>
-          <option value="Tech"></option>
+        <datalist id="categories">
+          <option value="Music" />
+          <option value="Sports" />
+          <option value="Art" />
+          <option value="Tech" />
         </datalist>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-5">
+      </motion.div>
+
+      {/* Cards */}
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 my-5"
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+      >
         {clubs.length > 0 ? (
-          clubs.map((club) => <Card key={club._id} club={club} />)
+          clubs.map((club) => (
+            <motion.div key={club._id} variants={itemVariants}>
+              <Card club={club} />
+            </motion.div>
+          ))
         ) : (
-          <p className="text-center w-full">No clubs Available</p>
+          <p className="text-center col-span-full text-gray-500">
+            No clubs available
+          </p>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

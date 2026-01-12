@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 const HeroSection = () => {
   return (
-    <section className="bg-gradient-to-bl from-teal-200 via white to-blue-30 py-10 rounded-2xl">
+    <section className="bg-gradient-to-bl from-teal-200 via white to-blue-30 mt-2 py-10 rounded-2xl">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
         <motion.div
           className="hidden md:block"
@@ -36,7 +36,7 @@ const HeroSection = () => {
             transition={{ delay: 0.2, duration: 0.7 }}
           >
             Welcome to{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-l from-teal-500 to blue-600 ">
+            <span className="text-transparent bg-clip-text bg-gradient-to-l from-teal-500 to-blue-600 ">
               ClubHub
             </span>
           </motion.h1>

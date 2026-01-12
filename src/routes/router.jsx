@@ -35,6 +35,7 @@ import Profile from "../pages/Common/Profile";
 import ErrorPage from "../pages/ErrorPage";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 import Payments from "../pages/Dashboard/Payments/Payments";
+import HomeStatistics from "../components/HomeStatistics/HomeStatistics";
 
 export const router = createBrowserRouter([
   {
@@ -64,22 +65,15 @@ export const router = createBrowserRouter([
         path: "profile",
         element: <Profile />,
       },
+
       {
         path: "clubs/:id",
-        element: (
-          <PrivateRoute>
-            <ClubDetails />
-          </PrivateRoute>
-        ),
+        element: <ClubDetails />,
       },
 
       {
         path: "events/:id",
-        element: (
-          <PrivateRoute>
-            <EventDetails />
-          </PrivateRoute>
-        ),
+        element: <EventDetails />,
       },
     ],
   },

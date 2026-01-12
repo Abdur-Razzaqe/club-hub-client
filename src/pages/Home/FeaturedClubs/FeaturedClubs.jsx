@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link } from "react-router";
+import LoadingSpinner from "../../Common/LoadingSpinner";
 
 const FeaturedClubs = () => {
   const axiosSecure = useAxiosSecure();
@@ -12,15 +13,15 @@ const FeaturedClubs = () => {
     },
   });
 
-  if (isLoading) return <p>loading....</p>;
+  if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="my-10">
+    <div className="my-10 bg-gray-50">
       <h2 className="text-3xl font-bold mb-6 text-center">Featured Clubs</h2>
       {clubs.length === 0 && (
         <p className="text-center text-gray-500 text-xl">No clubs available</p>
       )}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {clubs.map((club) => (
           <div
             key={club._id}
