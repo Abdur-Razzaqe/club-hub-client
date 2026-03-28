@@ -1,6 +1,8 @@
-import React, { Profiler } from "react";
-import { Link, Navigate, NavLink, Outlet } from "react-router";
+import React from "react";
+import { Link, NavLink, Outlet, useNavigate } from "react-router";
 import useRole from "../hooks/useRole";
+import useAuth from "../hooks/useAuth";
+import { useTheme } from "../contexts/ThemeContext/ThemeContext";
 import {
   GrDesktop,
   GrRestroom,
@@ -19,267 +21,289 @@ import {
   User2,
   UserCheck2Icon,
   UserCircle,
+  LogOut,
 } from "lucide-react";
 
 const DashboardLayout = () => {
   const [role] = useRole();
+  const { isDark } = useTheme();
+  const { logOut } = useAuth();
+  const navigate = useNavigate();
+
+  const overviewPath =
+    role === "admin"
+      ? "/dashboard/admin"
+      : role === "manager"
+        ? "/dashboard/manager"
+        : "/dashboard/member";
+
+  const handleLogOut = async () => {
+    await logOut();
+    navigate("/");
+  };
+
+  // ClubHub Brand Colors
+  const layoutBg = isDark
+    ? "bg-[#05010d] text-gray-100"
+    : "bg-gray-50 text-gray-900";
+  const sidebarBg = isDark
+    ? "bg-[#0b0514] border-white/5"
+    : "bg-white border-gray-200";
+  const navBg = isDark
+    ? "bg-[#0b0514]/80 border-b border-white/5"
+    : "bg-white/80 border-b border-gray-100";
+
+  const activeClass = isDark
+    ? "bg-pink-600 text-white shadow-lg shadow-pink-500/20"
+    : "bg-teal-600 text-white shadow-lg shadow-teal-500/20";
+
+  const hoverClass = isDark ? "hover:bg-white/10" : "hover:bg-black/5";
 
   return (
-    <div className="drawer lg:drawer-open max-w-7xl mx-auto">
+    <div
+      className={`drawer lg:drawer-open transition-colors duration-500 ${layoutBg}`}
+    >
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content">
-        {/* Navbar */}
-        <nav className="navbar w-full bg-base-300">
-          <label
-            htmlFor="my-drawer-4"
-            aria-label="open sidebar"
-            className="btn btn-square btn-ghost"
-          >
-            {/* Sidebar toggle icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth="2"
-              fill="none"
-              stroke="currentColor"
-              className="my-1.5 inline-block size-4"
+
+      <div className="drawer-content flex flex-col min-h-screen">
+        {/* --- Navbar --- */}
+        <nav
+          className={`navbar w-full sticky top-0 z-20 backdrop-blur-md px-6 ${navBg}`}
+        >
+          <div className="flex-none lg:hidden">
+            <label
+              htmlFor="my-drawer-4"
+              className={`btn btn-square btn-ghost ${isDark ? "text-white" : "text-gray-900"}`}
             >
-              <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
-              <path d="M9 4v16"></path>
-              <path d="M14 10l2 2l-2 2"></path>
-            </svg>
-          </label>
-          <div className="px-4">
-            <Logo></Logo>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block w-6 h-6 stroke-current"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </label>
           </div>
+          {/* <div className="flex-1 px-2">
+            <Logo />
+          </div> */}
         </nav>
-        {/* Page content here */}
-        <main className="p-4  mx-auto flex-1 items-center">
-          <Outlet></Outlet>
+
+        {/* --- Main Content Area --- */}
+        <main className="p-4 md:p-8 flex-1">
+          <div
+            className={`min-h-[85vh] rounded-[24px] p-6 transition-all border ${
+              isDark
+                ? "bg-[#0f071a] border-white/5"
+                : "bg-white border-gray-200 shadow-sm"
+            }`}
+          >
+            <Outlet />
+          </div>
         </main>
       </div>
 
-      <div className="drawer-side is-drawer-close:overflow-visible">
-        <label
-          htmlFor="my-drawer-4"
-          aria-label="close sidebar"
-          className="drawer-overlay"
-        ></label>
-        <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-          {/* Sidebar content here */}
-          {/* <Sidebar /> */}
-          <ul className="menu w-full grow ">
-            {/* List item */}
-            <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Homepage"
-              >
-                {/* Home icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
-                  className="my-1.5 inline-block size-4"
-                >
-                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                  <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                </svg>
-                <span className="is-drawer-close:hidden">Homepage</span>
-              </button>
-            </li>
+      {/* --- Sidebar --- */}
+      <div className="drawer-side z-30">
+        <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
+        <div
+          className={`flex min-h-full flex-col w-64 p-4 transition-colors duration-500 border-r ${sidebarBg}`}
+        >
+          <div className="hidden lg:flex px-4 py-6 mb-4">
+            <Logo />
+          </div>
+
+          <ul
+            className={`menu w-full grow space-y-1 ${isDark ? "text-gray-400" : "text-gray-600"}`}
+          >
             <li>
               <NavLink
-                to={
-                  role === "admin"
-                    ? "/dashboard/admin"
-                    : role === "manager"
-                    ? "/dashboard/manager"
-                    : "/dashboard/member"
+                to={overviewPath}
+                end
+                className={({ isActive }) =>
+                  `flex gap-3 items-center p-3 rounded-xl font-semibold transition-all ${isActive ? activeClass : hoverClass}`
                 }
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Overview"
               >
-                <GrDesktop />
-                <span className="is-drawer-close:hidden">Overview</span>
+                <GrDesktop size={18} /> Overview
               </NavLink>
             </li>
 
-            {/* admin menu */}
+            <div
+              className={`my-4 border-t ${isDark ? "border-white/5" : "border-black/5"}`}
+            />
+
+            {/* --- Admin Role --- */}
             {role === "admin" && (
               <>
                 <li>
                   <NavLink
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="ManageUser"
                     to="admin/manage-users"
+                    className={({ isActive }) =>
+                      `flex gap-3 items-center p-3 rounded-xl font-semibold ${isActive ? activeClass : hoverClass}`
+                    }
                   >
-                    <GrUserManager />
-                    <span className="is-drawer-close:hidden"> Manage User</span>
+                    <GrUserManager size={18} /> Manage User
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
                     to="admin/manage-clubs"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="ManageClubs"
+                    className={({ isActive }) =>
+                      `flex gap-3 items-center p-3 rounded-xl font-semibold ${isActive ? activeClass : hoverClass}`
+                    }
                   >
-                    <UserCheck2Icon />
-                    <span className="is-drawer-close:hidden">Manage Clubs</span>
+                    <UserCheck2Icon size={18} /> Manage Clubs
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="All Payment"
                     to="admin/payments"
+                    className={({ isActive }) =>
+                      `flex gap-3 items-center p-3 rounded-xl font-semibold ${isActive ? activeClass : hoverClass}`
+                    }
                   >
-                    <CreditCardIcon />
-                    <span className="is-drawer-close:hidden">
-                      {" "}
-                      All Payments
-                    </span>
+                    <CreditCardIcon size={18} /> All Payments
                   </NavLink>
                 </li>
               </>
             )}
-            {/* manager Menu */}
+
+            {/* --- Manager Role --- */}
             {role === "manager" && (
               <>
                 <li>
                   <NavLink
                     to="manager/create-club"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Create Club"
+                    className={({ isActive }) =>
+                      `flex gap-3 items-center p-3 rounded-xl font-semibold ${isActive ? activeClass : hoverClass}`
+                    }
                   >
-                    <PlusCircle />
-                    <span className="is-drawer-close:hidden"> Create Club</span>
+                    <PlusCircle size={18} /> Create Club
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
                     to="manager/my-clubs"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="My Clubs"
+                    className={({ isActive }) =>
+                      `flex gap-3 items-center p-3 rounded-xl font-semibold ${isActive ? activeClass : hoverClass}`
+                    }
                   >
-                    <ClipboardList />
-                    <span className="is-drawer-close:hidden"> My Clubs</span>
+                    <ClipboardList size={18} /> My Clubs
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
                     to="manager/club-members"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Club Members"
+                    className={({ isActive }) =>
+                      `flex gap-3 items-center p-3 rounded-xl font-semibold ${isActive ? activeClass : hoverClass}`
+                    }
                   >
-                    <User2 />
-                    <span className="is-drawer-close:hidden">Club Members</span>
+                    <User2 size={18} /> Club Members
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
                     to="manager/my-events"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Manage Events"
+                    className={({ isActive }) =>
+                      `flex gap-3 items-center p-3 rounded-xl font-semibold ${isActive ? activeClass : hoverClass}`
+                    }
                   >
-                    <Calendar size={20} />
-                    <span className="is-drawer-close:hidden">
-                      Manage Events
-                    </span>
+                    <Calendar size={18} /> Manage Events
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
                     to="manager/create-event"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Manage Events"
+                    className={({ isActive }) =>
+                      `flex gap-3 items-center p-3 rounded-xl font-semibold ${isActive ? activeClass : hoverClass}`
+                    }
                   >
-                    <PlusCircleIcon size={20} />
-                    <span className="is-drawer-close:hidden">
-                      {" "}
-                      Create Events
-                    </span>
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="manager/events/:eventId/registrations"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Event Registrations"
-                  >
-                    <GrUserAdd size={30} />
-
-                    <span className="is-drawer-close:hidden">
-                      Event Registrations
-                    </span>
+                    <PlusCircleIcon size={18} /> Create Events
                   </NavLink>
                 </li>
               </>
             )}
-            {/* member menu */}
+
+            {/* --- Member Role --- */}
             {role === "member" && (
               <>
                 <li>
                   <NavLink
                     to="member/my-clubs"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="My Clubs"
+                    className={({ isActive }) =>
+                      `flex gap-3 items-center p-3 rounded-xl font-semibold ${isActive ? activeClass : hoverClass}`
+                    }
                   >
-                    <GrRestroom />
-                    <span className="is-drawer-close:hidden"> My Clubs</span>
+                    <GrRestroom size={18} /> My Clubs
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
                     to="member/my-events"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="My Events"
+                    className={({ isActive }) =>
+                      `flex gap-3 items-center p-3 rounded-xl font-semibold ${isActive ? activeClass : hoverClass}`
+                    }
                   >
-                    <Calendar />
-                    <span className="is-drawer-close:hidden"> My Events</span>
+                    <Calendar size={18} /> My Events
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
                     to="member/payments"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="My Events"
+                    className={({ isActive }) =>
+                      `flex gap-3 items-center p-3 rounded-xl font-semibold ${isActive ? activeClass : hoverClass}`
+                    }
                   >
-                    <CreditCardIcon />
-                    <span className="is-drawer-close:hidden">My Payments</span>
+                    <CreditCardIcon size={18} /> My Payments
                   </NavLink>
                 </li>
               </>
             )}
 
-            <li>
-              <Link
-                to={"/profile"}
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Profile"
-              >
-                <UserCircle />
+            <div
+              className={`my-4 border-t ${isDark ? "border-white/5" : "border-black/5"}`}
+            />
 
-                <span className="is-drawer-close:hidden">Profile</span>
-              </Link>
+            {/* --- Profile Link Section --- */}
+            <li>
+              <NavLink
+                to="/dashboard/profile"
+                className={({ isActive }) =>
+                  `flex gap-3 items-center p-3 rounded-xl font-semibold transition-all cursor-pointer ${
+                    isActive ? activeClass : hoverClass
+                  }`
+                }
+              >
+                <UserCircle size={18} />
+                Profile
+              </NavLink>
             </li>
+
             <li>
               <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Settings"
+                className={`flex gap-3 items-center p-3 rounded-xl font-semibold cursor-pointer ${hoverClass}`}
               >
-                <Settings />
-
-                <span className="is-drawer-close:hidden">Settings</span>
+                <Settings size={18} /> Settings
               </button>
             </li>
           </ul>
+
+          {/* --- Logout Button --- */}
+          <div className="mt-auto pt-4 border-t border-white/5">
+            <button
+              onClick={handleLogOut}
+              className={`flex w-full gap-3 items-center p-3 rounded-xl font-bold transition-all text-red-500 cursor-pointer ${isDark ? "hover:bg-red-500/10" : "hover:bg-red-50"}`}
+            >
+              <LogOut size={18} />
+              <span>Logout</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

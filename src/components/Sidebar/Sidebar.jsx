@@ -38,8 +38,8 @@ const Sidebar = () => {
     role === "admin"
       ? adminMenu
       : role === "manager"
-      ? managerMenu
-      : memberMenu;
+        ? managerMenu
+        : memberMenu;
   return (
     <div className="p-5 space-y-2">
       {menu.map((item) => (

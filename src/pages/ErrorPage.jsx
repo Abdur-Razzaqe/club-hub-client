@@ -1,57 +1,81 @@
-import { Link, useNavigate } from "react-router";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useTheme } from "../contexts/ThemeContext/ThemeContext";
+import { MoveLeft, Home, AlertCircle } from "lucide-react";
 
 const ErrorPage = () => {
   const navigate = useNavigate();
+  const { isDark } = useTheme();
 
   return (
-    <section className="bg-white ">
-      <div className="container flex items-center min-h-screen px-6 py-12 mx-auto">
-        <div className="flex flex-col items-center max-w-sm mx-auto text-center">
-          <p className="p-3 text-sm font-medium text-lime-500 rounded-full bg-blue-50 ">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
-              />
-            </svg>
-          </p>
-          <h1 className="mt-3 text-2xl font-semibold text-gray-800  md:text-3xl">
-            Something Went Wrong!
-          </h1>
-          <p className="mt-4 text-gray-500 ">Here are some helpful links:</p>
+    <section
+      className={`min-h-screen flex items-center justify-center px-6 transition-colors duration-700 ${
+        isDark ? "bg-[#050505]" : "bg-gray-50"
+      }`}
+    >
+      {/* Background Water Bubbles (for dark mode) */}
+      {isDark && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-500/10 blur-[130px] rounded-full"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-teal-500/10 blur-[130px] rounded-full"></div>
+        </div>
+      )}
 
-          <div className="flex items-center w-full mt-6 gap-x-3 shrink-0 sm:w-auto">
+      <div className="max-w-md w-full relative">
+        {/* Error Card with Glass Effect */}
+        <div
+          className={`relative rounded-[40px] p-10 text-center transition-all duration-500 border ${
+            isDark
+              ? "bg-white/[0.02] backdrop-blur-3xl border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+              : "bg-white/80 backdrop-blur-xl border-white shadow-[0_20px_50px_rgba(0,0,0,0.05)]"
+          }`}
+        >
+          {/* Animated Icon Container */}
+          <div className="flex justify-center mb-6">
+            <div
+              className={`p-5 rounded-3xl animate-bounce ${
+                isDark ? "bg-red-500/10 text-red-400" : "bg-red-50 text-red-500"
+              }`}
+            >
+              <AlertCircle size={48} strokeWidth={1.5} />
+            </div>
+          </div>
+
+          <h1
+            className={`text-4xl font-black uppercase tracking-tighter ${isDark ? "text-white" : "text-gray-900"}`}
+          >
+            404 Lost!
+          </h1>
+
+          <p
+            className={`mt-4 text-sm font-medium leading-relaxed ${isDark ? "text-gray-400" : "text-gray-500"}`}
+          >
+            It seems the page you are looking for has been moved or doesn't
+            exist in our club records.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
+            {/* Go Back Button */}
             <button
               onClick={() => navigate(-1)}
-              className="flex items-center justify-center w-1/2 px-5 py-1 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto   hover:bg-gray-100 "
+              className={`w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-bold uppercase tracking-widest text-[10px] transition-all duration-300 border cursor-pointer ${
+                isDark
+                  ? "bg-white/5 border-white/10 text-white hover:bg-white/10"
+                  : "bg-gray-100 border-gray-200 text-gray-700 hover:bg-gray-200"
+              }`}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-5 h-5 rtl:rotate-180 text-lime-500"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-                />
-              </svg>
-
-              <span>Go back</span>
+              <MoveLeft size={16} />
+              Go Back
             </button>
 
-            <Link label={"Back to Home"} onClick={() => navigate("/")} />
+            {/* Home Link - Fixed Syntax */}
+            <Link
+              to="/"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-bold uppercase tracking-widest text-[10px] text-white bg-gradient-to-r from-teal-500 to-blue-600 hover:shadow-[0_10px_20px_rgba(20,184,166,0.3)] hover:scale-[1.05] active:scale-95 transition-all cursor-pointer"
+            >
+              <Home size={16} />
+              Home
+            </Link>
           </div>
         </div>
       </div>

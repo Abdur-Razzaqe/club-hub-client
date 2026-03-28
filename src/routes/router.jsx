@@ -61,10 +61,6 @@ export const router = createBrowserRouter([
         path: "events",
         element: <Events />,
       },
-      {
-        path: "profile",
-        element: <Profile />,
-      },
 
       {
         path: "clubs/:id",
@@ -99,6 +95,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <DashboardHome />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
       },
       {
         path: "admin",
@@ -221,7 +221,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/payments/:clubId",
+        path: "payments/:clubId",
         element: (
           <PrivateRoute>
             <Payments />
@@ -233,7 +233,7 @@ export const router = createBrowserRouter([
         element: <PaymentSuccess />,
       },
       {
-        path: "payment-cancelled",
+        path: "payment-cancel",
         element: <PaymentCancel />,
       },
     ],

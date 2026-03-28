@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
 const axiosSecure = axios.create({
-  baseURL: `https://clubhub-server.vercel.app`,
+  baseURL: "http://localhost:3000",
 });
 
 const useAxiosSecure = () => {
@@ -16,10 +16,12 @@ const useAxiosSecure = () => {
 
     const reqInterceptor = axiosSecure.interceptors.request.use(
       (config) => {
+        console.log("Sending request with token:", user.accessToken);
         config.headers.Authorization = `Bearer ${user.accessToken}`;
+
         return config;
       },
-      (error) => Promise.reject(error)
+      (error) => Promise.reject(error),
     );
 
     const resInterceptor = axiosSecure.interceptors.response.use(
@@ -27,13 +29,13 @@ const useAxiosSecure = () => {
       async (error) => {
         console.log("Axios error:", error);
 
-        const statusCode = error.status;
+        const statusCode = error.response?.status;
         if (statusCode === 401 || statusCode === 403) {
           await logOut();
           navigate("/login");
         }
         return Promise.reject(error);
-      }
+      },
     );
     return () => {
       axiosSecure.interceptors.request.eject(reqInterceptor);
