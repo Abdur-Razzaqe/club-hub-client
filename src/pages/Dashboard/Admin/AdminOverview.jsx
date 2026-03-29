@@ -1,7 +1,7 @@
 import React from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import MembershipChart from "./membershipChart";
+import MembershipChart from "./MembershipChart";
 import LoadingSpinner from "../../Common/LoadingSpinner";
 import { useTheme } from "../../../contexts/ThemeContext/ThemeContext";
 import {
