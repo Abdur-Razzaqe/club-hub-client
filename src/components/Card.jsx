@@ -73,7 +73,7 @@ const Card = ({ club }) => {
             }`}
           />
           <button
-            className={`relative w-full py-2.5 text-xs font-black uppercase tracking-widest rounded-[10px] transition-all duration-300 border-none outline-none ${
+            className={`relative w-full py-2.5 text-xs font-black uppercase tracking-widest rounded-[10px] transition-all duration-300 border-none outline-none cursor-pointer ${
               isDark
                 ? "bg-black text-white group-hover/btn:bg-transparent"
                 : "bg-white text-teal-600 group-hover/btn:bg-teal-600 group-hover/btn:text-white"
